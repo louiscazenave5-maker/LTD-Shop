@@ -1,134 +1,121 @@
 // ======================================
 // LTD SHOP - SCRIPT.JS
+// Compatible Vite
 // ======================================
 
 
-// WEBHOOK DISCORD
-
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1526236247876571239/qUCWe3urgWPITBXMymMPmdkXUVMEMQ1SNiQJeIkpK2IKgeqYgSR736qJAquj2nnFhK0C";
+const WEBHOOK_URL = "TON_WEBHOOK_ICI";
 
 
-
-// VARIABLES
+// PANIER
 
 let cart = JSON.parse(localStorage.getItem("ltdCart")) || [];
 
 
-const buttons = document.querySelectorAll(".buy");
+// ELEMENTS
 
-const cartBox = document.getElementById("cartBox");
+const buttons = document.querySelectorAll(".buy");
 
 const cartIcon = document.querySelector(".cart-icon");
 
-const cartCount = document.getElementById("cartCount");
+const cartBox = document.getElementById("cartBox");
 
+const cartCount = document.getElementById("cartCount");
 
 const cartItems = document.getElementById("cartItems");
 
 const totalElement = document.getElementById("total");
 
-
 const checkoutBtn = document.querySelector(".checkout");
 
 const popup = document.querySelector(".popup");
 
-const popupButton = popup.querySelector("button");
-
-
-
-
-
-// ======================================
-// OUVRIR / FERMER PANIER
-// ======================================
-
-
-cartIcon.addEventListener("click",()=>{
-
-    cartBox.classList.toggle("active");
-
-});
-
-
+const popupButton = popup?.querySelector("button");
 
 
 
 // ======================================
-// AJOUT PRODUIT
+// PANIER OUVERTURE
+// ======================================
+
+
+if(cartIcon && cartBox){
+
+    cartIcon.addEventListener("click",()=>{
+
+        cartBox.classList.toggle("active");
+
+    });
+
+}
+
+
+
+// ======================================
+// AJOUT PANIER
 // ======================================
 
 
 buttons.forEach(button=>{
 
 
-button.addEventListener("click",()=>{
+    button.addEventListener("click",()=>{
 
 
-    const card = button.closest(".card");
+        const card = button.closest(".card");
 
 
-    const name =
-    card.querySelector("h3").innerText;
+        const name = card.querySelector("h3").textContent;
 
 
-
-    const price =
-    Number(
-        card.querySelector(".price")
-        .innerText
-        .replace(/\D/g,"")
-    );
+        const price = Number(
+            card.querySelector(".price")
+            .textContent
+            .replace(/\D/g,"")
+        );
 
 
-
-    const input =
-    card.querySelector(".quantity input");
+        const input = card.querySelector("input");
 
 
-
-    const quantity =
-    input ? Number(input.value) : 1;
+        const quantity = input ? Number(input.value) : 1;
 
 
 
-    cart.push({
+        cart.push({
 
-        name:name,
+            name,
 
-        price:price,
+            price,
 
-        quantity:quantity,
+            quantity,
 
-        total:price * quantity
+            total: price * quantity
+
+        });
+
+
+
+        saveCart();
+
+        updateCart();
+
+
+
+        button.textContent="Ajouté ✓";
+
+
+        setTimeout(()=>{
+
+            button.textContent="Ajouter au panier";
+
+        },1000);
+
 
     });
 
 
-
-    saveCart();
-
-    updateCart();
-
-
-
-    button.innerText="Ajouté ✓";
-
-
-    setTimeout(()=>{
-
-        button.innerText="Ajouter au panier";
-
-    },1200);
-
-
-
 });
-
-
-
-});
-
-
 
 
 
@@ -140,95 +127,89 @@ button.addEventListener("click",()=>{
 function updateCart(){
 
 
-cartItems.innerHTML="";
+    if(!cartItems) return;
 
 
-let total=0;
+    cartItems.innerHTML="";
 
 
+    let total = 0;
 
-if(cart.length===0){
-
-
-cartItems.innerHTML=
-"<p>Votre panier est vide.</p>";
-
-
-totalElement.innerText="0 $";
-
-cartCount.innerText="0";
-
-
-return;
-
-}
+    let count = 0;
 
 
 
+    if(cart.length === 0){
 
 
-cart.forEach((item,index)=>{
+        cartItems.innerHTML =
+        "<p>Votre panier est vide.</p>";
 
 
-total += item.total;
-
-
-
-const div =
-document.createElement("div");
-
-
-div.className="cart-item";
+    }
 
 
 
-div.innerHTML=`
-
-<span>
-
-${item.name}
-
-x${item.quantity}
-
-</span>
+    cart.forEach((item,index)=>{
 
 
-<span>
+        total += item.total;
 
-${item.total.toLocaleString()}$
-
-<button onclick="removeItem(${index})">
-
-❌
-
-</button>
-
-</span>
-
-`;
+        count += item.quantity;
 
 
 
-cartItems.appendChild(div);
+        const div = document.createElement("div");
+
+
+        div.className="cart-item";
+
+
+        div.innerHTML=`
+
+        <span>
+        ${item.name} x${item.quantity}
+        </span>
+
+        <span>
+        ${item.total.toLocaleString()} $
+        
+        <button class="remove">
+        ❌
+        </button>
+
+        </span>
+
+        `;
 
 
 
-});
+        div.querySelector(".remove")
+        .addEventListener("click",()=>{
+
+            removeItem(index);
+
+        });
 
 
 
-totalElement.innerText =
-total.toLocaleString()+" $";
+        cartItems.appendChild(div);
+
+
+    });
 
 
 
-cartCount.innerText =
-cart.length;
+    if(cartCount)
+    cartCount.textContent=count;
 
+
+    if(totalElement)
+    totalElement.textContent =
+    total.toLocaleString()+" $";
 
 
 }
-
 
 
 
@@ -241,17 +222,15 @@ cart.length;
 function removeItem(index){
 
 
-cart.splice(index,1);
+    cart.splice(index,1);
 
 
-saveCart();
+    saveCart();
 
-
-updateCart();
+    updateCart();
 
 
 }
-
 
 
 
@@ -264,94 +243,75 @@ updateCart();
 function saveCart(){
 
 
-localStorage.setItem(
-
-"ltdCart",
-
-JSON.stringify(cart)
-
-);
+    localStorage.setItem(
+        "ltdCart",
+        JSON.stringify(cart)
+    );
 
 
 }
 
 
 
+// ======================================
+// COMMANDER
+// ======================================
 
 
-// ======================================
-// OUVRIR COMMANDE
-// ======================================
+if(checkoutBtn && popup){
 
 
 checkoutBtn.addEventListener("click",()=>{
 
 
-if(cart.length===0){
+    if(cart.length===0){
+
+        alert("Votre panier est vide !");
+
+        return;
+
+    }
 
 
-alert("Votre panier est vide !");
-
-
-return;
-
-
-}
-
-
-popup.classList.add("active");
+    popup.classList.add("active");
 
 
 });
 
 
-
+}
 
 
 
 // ======================================
-// ENVOI COMMANDE DISCORD
+// ENVOI COMMANDE
 // ======================================
+
+
+if(popupButton){
 
 
 popupButton.addEventListener("click",async()=>{
 
 
-const inputs =
-popup.querySelectorAll("input");
+const inputs = popup.querySelectorAll("input");
 
 
+const nom = inputs[0].value;
 
-const nom =
-inputs[0].value;
+const telephone = inputs[1].value;
 
-
-
-const telephone =
-inputs[1].value;
-
-
-
-const lieu =
-popup.querySelector("textarea").value;
-
+const lieu = popup.querySelector("textarea").value;
 
 
 
 if(!nom || !telephone || !lieu){
 
-
-alert(
-"Merci de remplir toutes les informations."
-);
-
+alert("Remplis toutes les informations.");
 
 return;
 
-
 }
-
-
 
 
 
@@ -361,17 +321,14 @@ let produits="";
 
 
 
-
 cart.forEach(item=>{
 
 
 total += item.total;
 
 
-
 produits +=
-
-`• ${item.name} x${item.quantity} — ${item.total}$\n`;
+`• ${item.name} x${item.quantity} - ${item.total}$\n`;
 
 
 });
@@ -379,99 +336,57 @@ produits +=
 
 
 
+const data={
 
 
-const embed = {
+embeds:[{
 
+title:"🛒 Nouvelle commande LTD",
 
-title:
-"🛒 Nouvelle commande LTD SHOP",
-
-
-
-color:
-5763719,
-
+color:5763719,
 
 
 fields:[
 
-
 {
-
 name:"👤 Client",
-
-value:nom,
-
-inline:true
-
+value:nom
 },
 
-
-
 {
-
 name:"📞 Téléphone",
-
-value:telephone,
-
-inline:true
-
+value:telephone
 },
 
-
-
 {
-
 name:"📦 Produits",
-
 value:produits
-
 },
 
-
-
 {
-
-name:"📍 Lieu de livraison",
-
+name:"📍 Livraison",
 value:lieu
-
 },
 
-
-
 {
-
 name:"💰 Total",
-
-value:
-total.toLocaleString()+" $"
-
+value:total+" $"
 }
-
 
 ],
 
 
-
 footer:{
-
-text:
-"LTD SHOP • Limited Gasoline"
-
+text:"LTD LS"
 },
 
 
+timestamp:new Date()
 
-timestamp:
-new Date()
-
+}]
 
 
 };
-
-
 
 
 
@@ -482,50 +397,29 @@ await fetch(WEBHOOK_URL,{
 
 method:"POST",
 
-
 headers:{
-
-"Content-Type":
-"application/json"
-
+"Content-Type":"application/json"
 },
 
-
-body:JSON.stringify({
-
-embeds:[embed]
-
-})
-
+body:JSON.stringify(data)
 
 });
 
 
 
-alert(
-"Commande envoyée au LTD !"
-);
+alert("Commande envoyée !");
 
 
 
 cart=[];
 
-
 saveCart();
 
-
 updateCart();
 
 
+
 popup.classList.remove("active");
-
-
-
-inputs[0].value="";
-
-inputs[1].value="";
-
-popup.querySelector("textarea").value="";
 
 
 
@@ -533,52 +427,12 @@ popup.querySelector("textarea").value="";
 
 
 
-catch(error){
+catch(e){
 
 
-console.error(error);
+console.error(e);
 
-
-alert(
-"Erreur webhook."
-);
-
-
-}
-
-
-
-
-});
-
-
-
-
-
-// ======================================
-// FERMER POPUP
-// ======================================
-
-
-document.addEventListener("click",(e)=>{
-
-
-if(
-
-popup.classList.contains("active")
-
-&&
-
-!popup.contains(e.target)
-
-&&
-
-!checkoutBtn.contains(e.target)
-
-){
-
-
-popup.classList.remove("active");
+alert("Erreur commande");
 
 
 }
@@ -588,10 +442,16 @@ popup.classList.remove("active");
 });
 
 
+}
 
 
 
+// ======================================
+// DEMARRAGE
+// ======================================
 
-// START
 
 updateCart();
+
+
+console.log("LTD SCRIPT CHARGE");
