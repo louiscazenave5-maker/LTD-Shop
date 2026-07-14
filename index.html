@@ -1,457 +1,374 @@
-// ======================================
-// LTD SHOP - SCRIPT.JS
-// Compatible Vite
-// ======================================
+<!DOCTYPE html>
+<html lang="fr">
 
+<head>
 
-const WEBHOOK_URL = "TON_WEBHOOK_ICI";
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>LTD LS</title>
 
-// PANIER
+    <link rel="stylesheet" href="style.css">
 
-let cart = JSON.parse(localStorage.getItem("ltdCart")) || [];
+</head>
 
+<body>
 
-// ELEMENTS
+<!-- ================= NAVBAR ================= -->
 
-const buttons = document.querySelectorAll(".buy");
+<nav>
 
-const cartIcon = document.querySelector(".cart-icon");
+    <div class="logo">
 
-const cartBox = document.getElementById("cartBox");
+        <img src="logo.png">
 
-const cartCount = document.getElementById("cartCount");
+        <h1>LTD LS</h1>
 
-const cartItems = document.getElementById("cartItems");
+    </div>
 
-const totalElement = document.getElementById("total");
+    <ul>
 
-const checkoutBtn = document.querySelector(".checkout");
+        <li>Accueil</li>
+        <li>Boutique</li>
+        <li>Promotions</li>
+        <li>Collection</li>
+        <li>Contact</li>
 
-const popup = document.querySelector(".popup");
+    </ul>
 
-const popupButton = popup?.querySelector("button");
+    <div class="cart-icon">
 
+        🛒
 
+        <span id="cartCount">0</span>
 
-// ======================================
-// PANIER OUVERTURE
-// ======================================
+    </div>
 
+</nav>
 
-if(cartIcon && cartBox){
+<!-- ================= HERO ================= -->
 
-    cartIcon.addEventListener("click",()=>{
+<section class="hero">
 
-        cartBox.classList.toggle("active");
+    <img src="logo.png">
 
-    });
+    <h2>LTD LS</h2>
 
-}
+    <p>
 
+        Retrouvez tous les produits officiels LTD.
+        Nourriture, boissons, objets exclusifs,
+        peluches limitées et bien plus encore.
 
+    </p>
 
-// ======================================
-// AJOUT PANIER
-// ======================================
+    <a class="btn" href="#shop">
 
+        Découvrir la boutique
 
-buttons.forEach(button=>{
+    </a>
 
+</section>
 
-    button.addEventListener("click",()=>{
+<!-- ================= BOUTIQUE ================= -->
 
+<section class="products" id="shop">
 
-        const card = button.closest(".card");
+<h2 class="title">
 
+Nos produits
 
-        const name = card.querySelector("h3").textContent;
+</h2>
 
+<div class="grid">
 
-        const price = Number(
-            card.querySelector(".price")
-            .textContent
-            .replace(/\D/g,"")
-        );
+<div class="card">
 
+<img src="https://placehold.co/250x180">
 
-        const input = card.querySelector("input");
+<h3>Peluche LTD</h3>
 
+<p>
 
-        const quantity = input ? Number(input.value) : 1;
+Edition limitée.
 
+Disponible uniquement pendant quelques jours.
 
+</p>
 
-        cart.push({
+<div class="price">
 
-            name,
+2 000 $
 
-            price,
+</div>
 
-            quantity,
+    <div class="quantity">
 
-            total: price * quantity
+    <input type="number" value="1" min="1">
 
-        });
+    </div>
 
+    <button class="buy">
+    Ajouter au panier
+    </button>
 
+</div>
 
-        saveCart();
 
-        updateCart();
 
+<div class="card">
 
+<img src="https://placehold.co/250x180">
 
-        button.textContent="Ajouté ✓";
+<h3>Canard Policier</h3>
 
+<p>
 
-        setTimeout(()=>{
+Collection officielle LTD.
 
-            button.textContent="Ajouter au panier";
+</p>
 
-        },1000);
+<div class="price">
 
+1 500 $
 
-    });
+</div>
 
+    <div class="quantity">
 
-});
+    <input type="number" value="1" min="1">
 
+    </div>
 
+    <button class="buy">
+    Ajouter au panier
+    </button>
 
-// ======================================
-// AFFICHAGE PANIER
-// ======================================
+</div>
 
 
-function updateCart(){
 
+<div class="card">
 
-    if(!cartItems) return;
+<img src="https://placehold.co/250x180">
 
+<h3>Menu Burger</h3>
 
-    cartItems.innerHTML="";
+<p>
 
+Repas complet LTD.
 
-    let total = 0;
+</p>
 
-    let count = 0;
+<div class="price">
 
+350 $
 
+</div>
 
-    if(cart.length === 0){
+    <div class="quantity">
 
+    <input type="number" value="1" min="1">
 
-        cartItems.innerHTML =
-        "<p>Votre panier est vide.</p>";
+    </div>
 
+    <button class="buy">
+    Ajouter au panier
+    </button>
 
-    }
+</div>
 
 
 
-    cart.forEach((item,index)=>{
+<div class="card">
 
+<img src="https://placehold.co/250x180">
 
-        total += item.total;
+<h3>Boisson LTD</h3>
 
-        count += item.quantity;
+<p>
 
+Boisson fraîche.
 
+</p>
 
-        const div = document.createElement("div");
+<div class="price">
 
+75 $
 
-        div.className="cart-item";
+</div>
 
+    <div class="quantity">
 
-        div.innerHTML=`
+    <input type="number" value="1" min="1">
 
-        <span>
-        ${item.name} x${item.quantity}
-        </span>
+    </div>
 
-        <span>
-        ${item.total.toLocaleString()} $
-        
-        <button class="remove">
-        ❌
-        </button>
+    <button class="buy">
+    Ajouter au panier
+    </button>
 
-        </span>
+</div>
 
-        `;
 
 
+<div class="card">
 
-        div.querySelector(".remove")
-        .addEventListener("click",()=>{
+<img src="https://placehold.co/250x180">
 
-            removeItem(index);
+<h3>Gobelet LTD</h3>
 
-        });
+<p>
 
+Edition réutilisable.
 
+</p>
 
-        cartItems.appendChild(div);
+<div class="price">
 
+250 $
 
-    });
+</div>
 
+    <div class="quantity">
 
+    <input type="number" value="1" min="1">
 
-    if(cartCount)
-    cartCount.textContent=count;
+    </div>
 
+    <button class="buy">
+    Ajouter au panier
+    </button>
 
-    if(totalElement)
-    totalElement.textContent =
-    total.toLocaleString()+" $";
+</div>
 
 
-}
 
+<div class="card">
 
+<img src="https://placehold.co/250x180">
 
+<h3>Mystery Box</h3>
 
-// ======================================
-// SUPPRESSION
-// ======================================
+<p>
 
+Un objet aléatoire exclusif.
 
-function removeItem(index){
+</p>
 
+<div class="price">
 
-    cart.splice(index,1);
+3 000 $
 
+</div>
 
-    saveCart();
+    <div class="quantity">
 
-    updateCart();
+    <input type="number" value="1" min="1">
 
+    </div>
 
-}
+    <button class="buy">
+    Ajouter au panier
+    </button>
 
+</div>
 
+</div>
 
+</section>
 
-// ======================================
-// SAUVEGARDE
-// ======================================
+<!-- ================= PANIER ================= -->
 
+<div class="cart" id="cartBox">
 
-function saveCart(){
+<h3>
 
+🛒 Mon panier
 
-    localStorage.setItem(
-        "ltdCart",
-        JSON.stringify(cart)
-    );
+</h3>
 
+<div id="cartItems">
 
-}
+<p>
 
+Votre panier est vide.
 
+</p>
 
-// ======================================
-// COMMANDER
-// ======================================
+</div>
 
+<div class="total">
 
-if(checkoutBtn && popup){
+Total :
 
+<span id="total">
 
-checkoutBtn.addEventListener("click",()=>{
+0 $
 
+</span>
 
-    if(cart.length===0){
+</div>
 
-        alert("Votre panier est vide !");
+<button class="checkout">
 
-        return;
+Commander
 
-    }
+</button>
 
+</div>
 
-    popup.classList.add("active");
+<!-- ================= POPUP ================= -->
 
+<div class="popup">
 
-});
+<h2>
 
+Commander
 
-}
+</h2>
 
+<input
+type="text"
+placeholder="Nom">
 
+    <input
+    type="text"
+    placeholder="Numéro de téléphone">
 
-// ======================================
-// ENVOI COMMANDE
-// ======================================
+    <textarea
+    placeholder="Lieu de livraison"></textarea>
 
+<button>
 
-if(popupButton){
+Valider la commande
 
+</button>
 
-popupButton.addEventListener("click",async()=>{
+</div>
 
+<!-- ================= FOOTER ================= -->
 
-const inputs = popup.querySelectorAll("input");
+<footer>
 
+<h2>
 
-const nom = inputs[0].value;
+LTD LS
 
-const telephone = inputs[1].value;
+</h2>
 
-const lieu = popup.querySelector("textarea").value;
+<br>
 
+<p>
 
+© 2026 Limited Gasoline
 
-if(!nom || !telephone || !lieu){
+</p>
 
-alert("Remplis toutes les informations.");
+</footer>
 
-return;
+<script src="script.js"></script>
 
-}
+</body>
 
-
-
-let total=0;
-
-let produits="";
-
-
-
-cart.forEach(item=>{
-
-
-total += item.total;
-
-
-produits +=
-`• ${item.name} x${item.quantity} - ${item.total}$\n`;
-
-
-});
-
-
-
-
-const data={
-
-
-embeds:[{
-
-title:"🛒 Nouvelle commande LTD",
-
-color:5763719,
-
-
-fields:[
-
-{
-name:"👤 Client",
-value:nom
-},
-
-{
-name:"📞 Téléphone",
-value:telephone
-},
-
-{
-name:"📦 Produits",
-value:produits
-},
-
-{
-name:"📍 Livraison",
-value:lieu
-},
-
-{
-name:"💰 Total",
-value:total+" $"
-}
-
-],
-
-
-footer:{
-text:"LTD LS"
-},
-
-
-timestamp:new Date()
-
-}]
-
-
-};
-
-
-
-try{
-
-
-await fetch(WEBHOOK_URL,{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify(data)
-
-});
-
-
-
-alert("Commande envoyée !");
-
-
-
-cart=[];
-
-saveCart();
-
-updateCart();
-
-
-
-popup.classList.remove("active");
-
-
-
-}
-
-
-
-catch(e){
-
-
-console.error(e);
-
-alert("Erreur commande");
-
-
-}
-
-
-
-});
-
-
-}
-
-
-
-// ======================================
-// DEMARRAGE
-// ======================================
-
-
-updateCart();
-
-
-console.log("LTD SCRIPT CHARGE");
+</html>
