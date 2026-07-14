@@ -4,7 +4,7 @@
 // ======================================
 
 
-const WEBHOOK_URL = "TON_WEBHOOK_ICI";
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1526236247876571239/qUCWe3urgWPITBXMymMPmdkXUVMEMQ1SNiQJeIkpK2IKgeqYgSR736qJAquj2nnFhK0C";
 
 
 // PANIER
