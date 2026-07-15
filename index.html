@@ -526,7 +526,6 @@ Commander
 
 <!-- POPUP COMMANDE -->
 
-
 <div class="popup">
 
 
@@ -535,10 +534,12 @@ Commande
 </h2>
 
 
+
 <input 
 id="clientName"
 type="text"
 placeholder="Nom">
+
 
 
 <input
@@ -554,46 +555,24 @@ placeholder="Lieu de livraison"></textarea>
 
 
 
-<div class="popup">
-
-<h2>
-Commande
-</h2>
-
-<input 
-type="text"
-placeholder="Nom">
-
-
-<input
-type="text"
-placeholder="Numéro de téléphone">
-
-
-<textarea
-placeholder="Lieu de livraison"></textarea>
-
 
 <label for="orderDate">
-Date de livraison souhaitée
+📅 Date de livraison souhaitée
 </label>
 
+
 <input
-type="datetime-local"
 id="orderDate"
->
+type="datetime-local">
 
 
-<button>
-Valider la commande
-</button>
 
-</div>
 
 
 <label class="upload-label">
 📷 Preuve de paiement
 </label>
+
 
 
 <input
@@ -603,39 +582,48 @@ accept="image/png,image/jpeg,image/jpg,.pdf">
 
 
 
+
+
 <button id="sendOrder">
+
 Valider la commande
+
 </button>
+
 
 
 </div>
 
 
 
-<button>
-Valider la commande
-</button>
 
 
-</div>
+<!-- POPUP SUCCÈS -->
 
 
 <div class="success-popup" id="successPopup">
+
 
 <h2>
 Merci pour votre commande !
 </h2>
 
+
 <p>
 Le LTD vous contactera quand la commande sera prête.
 </p>
 
+
+
 <button id="closeSuccess">
+
 Fermer
+
 </button>
 
-</div>
 
+
+</div>
 
 
 <footer>
