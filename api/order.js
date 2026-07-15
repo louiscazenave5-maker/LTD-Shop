@@ -15,10 +15,20 @@ const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
 export default async function handler(req, res) {
 
 
-    if(req.method !== "POST"){
+    if (req.method !== "POST") {
 
         return res.status(405).json({
-            error:"Méthode non autorisée"
+            error: "Méthode non autorisée"
+        });
+
+    }
+
+
+
+    if (!WEBHOOK_URL) {
+
+        return res.status(500).json({
+            error: "Webhook Discord manquant"
         });
 
     }
@@ -26,96 +36,160 @@ export default async function handler(req, res) {
 
 
     const form = formidable({
-        multiples:false
+
+        multiples: false,
+
+        maxFileSize: 8 * 1024 * 1024
+
     });
 
 
 
-    try{
+
+    try {
 
 
         const [fields, files] = await form.parse(req);
 
 
 
-        const name = fields.name?.[0] || "Inconnu";
+        // INFORMATIONS CLIENT
 
-        const phone = fields.phone?.[0] || "Non renseigné";
-
-        const location = fields.location?.[0] || "Non renseigné";
-
-        const deliveryDate = fields.deliveryDate;
-        
-        const products = fields.products?.[0] || "Aucun produit";
-
-        const total = fields.total?.[0] || "0 $";
+        const name =
+            fields.name?.[0] || "Inconnu";
 
 
+        const phone =
+            fields.phone?.[0] || "Non renseigné";
 
-        const proof = files.paymentProof?.[0];
+
+        const location =
+            fields.location?.[0] || "Non renseigné";
+
+
+        const deliveryDate =
+            fields.deliveryDate?.[0] || "Non renseignée";
+
+
+
+        // COMMANDE
+
+
+        const products =
+            fields.products?.[0] || "Aucun produit";
+
+
+        const total =
+            fields.total?.[0] || "0 $";
+
+
+
+
+        // IMAGE PAIEMENT
+
+
+        const proof =
+            files.paymentProof?.[0];
+
+
+
 
 
 
         const embed = {
 
 
-            title:"🛒 Nouvelle commande LTD SHOP",
+            title:
+            "🛒 Nouvelle commande LTD SHOP",
 
-            color:5763719,
+
+
+            color:
+            5763719,
+
 
 
             fields:[
 
+
                 {
+
                     name:"👤 Client",
+
                     value:name,
+
                     inline:true
+
                 },
 
 
                 {
+
                     name:"📞 Téléphone",
+
                     value:phone,
+
                     inline:true
+
                 },
 
 
                 {
-                    name:"📍 Livraison",
+
+                    name:"📍 Lieu de livraison",
+
                     value:location
-                },
 
-                {
-                    name: "📅 Date de livraison souhaitée",
-                    value: deliveryDate || "Non renseignée"
                 },
 
 
                 {
+
+                    name:"📅 Date de livraison souhaitée",
+
+                    value:deliveryDate
+
+                },
+
+
+                {
+
                     name:"📦 Produits",
-                    value:products
+
+                    value:products.substring(0,1000)
+
                 },
 
 
                 {
+
                     name:"💰 Total",
+
                     value:total
+
                 }
 
 
             ],
 
 
+
             footer:{
-                text:"LTD LS • Limited Gasoline"
+
+                text:
+                "LTD LS • Limited Gasoline"
+
             },
 
 
-            timestamp:new Date()
 
-
+            timestamp:
+            new Date()
 
         };
+
+
+
 
 
 
@@ -140,21 +214,26 @@ export default async function handler(req, res) {
 
 
 
+
+
         if(proof){
 
 
-            const fileBuffer = fs.readFileSync(
+
+            const buffer =
+            fs.readFileSync(
                 proof.filepath
             );
+
 
 
             discordForm.append(
 
                 "files[0]",
 
-                new Blob([fileBuffer]),
+                new Blob([buffer]),
 
-                proof.originalFilename
+                proof.originalFilename || "preuve.png"
 
             );
 
@@ -164,7 +243,11 @@ export default async function handler(req, res) {
 
 
 
-        const discordResponse = await fetch(
+
+
+
+        const discordResponse =
+        await fetch(
 
             WEBHOOK_URL,
 
@@ -181,7 +264,23 @@ export default async function handler(req, res) {
 
 
 
+
+
+
         if(!discordResponse.ok){
+
+
+
+            const discordError =
+            await discordResponse.text();
+
+
+
+            console.error(
+                "Discord:",
+                discordError
+            );
+
 
 
             throw new Error(
@@ -194,33 +293,43 @@ export default async function handler(req, res) {
 
 
 
+
+
+
+
         return res.status(200).json({
 
-            success:true
+            success:true,
+
+            message:"Commande envoyée"
 
         });
 
 
 
 
-    }
 
 
-    catch(error){
+    } catch(error){
 
 
-        console.error(error);
+
+        console.error(
+            "ORDER ERROR:",
+            error
+        );
+
 
 
         return res.status(500).json({
 
-            error:"Erreur serveur"
+            error:
+            "Erreur serveur"
 
         });
 
 
     }
-
 
 
 }
