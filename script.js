@@ -316,20 +316,14 @@ return;
 
 
 let total=0;
-
 let produits="";
-
-
 
 cart.forEach(item=>{
 
+    total += item.total;
 
-total += item.total;
-
-
-produits +=
-`• ${item.name} x${item.quantity} - ${item.total}$\n`;
-
+    produits +=
+    `• ${item.name} x${item.quantity} - ${item.total}$\n`;
 
 });
 
