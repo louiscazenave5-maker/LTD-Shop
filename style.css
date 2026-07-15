@@ -917,6 +917,82 @@ width:100%;
 
 color:white;
 
-}        
+} 
+
+
+.success-popup{
+
+position:fixed;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+background:#081B58;
+
+padding:40px;
+
+border-radius:25px;
+
+width:450px;
+
+max-width:90%;
+
+text-align:center;
+
+display:none;
+
+z-index:3000;
+
+border:1px solid rgba(255,255,255,.2);
+
+box-shadow:0 20px 50px rgba(0,0,0,.5);
+
+}
+
+
+.success-popup.active{
+
+display:block;
+
+}
+
+
+.success-popup h2{
+
+font-size:28px;
+
+margin-bottom:20px;
+
+}
+
+
+.success-popup p{
+
+opacity:.8;
+
+margin-bottom:30px;
+
+}
+
+
+.success-popup button{
+
+background:#d60000;
+
+color:white;
+
+border:none;
+
+padding:15px 40px;
+
+border-radius:15px;
+
+cursor:pointer;
+
+font-weight:700;
+
+}
 
 }
