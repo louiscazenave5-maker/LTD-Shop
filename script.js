@@ -36,6 +36,12 @@ const popup = document.querySelector(".popup");
 
 const sendOrderBtn = document.getElementById("sendOrder");
 
+const successPopup = document.getElementById("successPopup");
+
+const closeSuccess = document.getElementById("closeSuccess");
+
+const orderDate = document.getElementById("orderDate");
+
 
 
 
