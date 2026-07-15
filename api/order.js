@@ -100,7 +100,7 @@ export default async function handler(req, res) {
 
 
             title:
-            "🛒 Nouvelle commande LTD SHOP",
+            "Nouvelle Commande",
 
 
 
@@ -114,7 +114,7 @@ export default async function handler(req, res) {
 
                 {
 
-                    name:"👤 Client",
+                    name:"Client",
 
                     value:name,
 
@@ -125,7 +125,7 @@ export default async function handler(req, res) {
 
                 {
 
-                    name:"📞 Téléphone",
+                    name:"Téléphone",
 
                     value:phone,
 
@@ -136,7 +136,7 @@ export default async function handler(req, res) {
 
                 {
 
-                    name:"📍 Lieu de livraison",
+                    name:"Lieu de livraison",
 
                     value:location
 
@@ -145,7 +145,7 @@ export default async function handler(req, res) {
 
                 {
 
-                    name:"📅 Date de livraison souhaitée",
+                    name:"Date de livraison souhaitée",
 
                     value:deliveryDate
 
@@ -154,7 +154,7 @@ export default async function handler(req, res) {
 
                 {
 
-                    name:"📦 Produits",
+                    name:"Produits",
 
                     value:products.substring(0,1000)
 
@@ -163,7 +163,7 @@ export default async function handler(req, res) {
 
                 {
 
-                    name:"💰 Total",
+                    name:"Total",
 
                     value:total
 
