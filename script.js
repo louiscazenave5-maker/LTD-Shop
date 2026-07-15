@@ -36,9 +36,15 @@ const popup = document.querySelector(".popup");
 
 const sendOrderBtn = document.getElementById("sendOrder");
 
+
+// Confirmation
+
 const successPopup = document.getElementById("successPopup");
 
 const closeSuccess = document.getElementById("closeSuccess");
+
+
+// Date livraison
 
 const orderDate = document.getElementById("orderDate");
 
@@ -46,11 +52,11 @@ const orderDate = document.getElementById("orderDate");
 
 
 // ==========================
-// OUVERTURE PANIER
+// PANIER OUVERTURE
 // ==========================
 
 
-if(cartIcon){
+if(cartIcon && cartBox){
 
 cartIcon.addEventListener("click",()=>{
 
@@ -76,8 +82,9 @@ button.addEventListener("click",()=>{
 const card = button.closest(".card");
 
 
-const name = 
+const name =
 card.querySelector("h3").textContent;
+
 
 
 const price = Number(
@@ -98,17 +105,19 @@ card.querySelector("input").value
 
 
 
+
 cart.push({
 
-name:name,
+name,
 
-price:price,
+price,
 
-quantity:quantity,
+quantity,
 
 total:price * quantity
 
 });
+
 
 
 
@@ -119,6 +128,7 @@ updateCart();
 
 
 button.textContent="Ajouté ✓";
+
 
 
 setTimeout(()=>{
@@ -137,6 +147,7 @@ button.textContent="Ajouter au panier";
 
 
 
+
 // ==========================
 // AFFICHAGE PANIER
 // ==========================
@@ -145,19 +156,22 @@ button.textContent="Ajouter au panier";
 function updateCart(){
 
 
+if(!cartItems) return;
+
+
 cartItems.innerHTML="";
 
 
-let total=0;
+let total = 0;
 
-let count=0;
-
-
-
-if(cart.length===0){
+let count = 0;
 
 
-cartItems.innerHTML=
+
+if(cart.length === 0){
+
+
+cartItems.innerHTML =
 "<p>Votre panier est vide.</p>";
 
 
@@ -179,6 +193,7 @@ const div=document.createElement("div");
 
 
 div.className="cart-item";
+
 
 
 div.innerHTML=`
@@ -219,15 +234,19 @@ cartItems.appendChild(div);
 
 
 
+if(cartCount)
 cartCount.textContent=count;
 
 
+
+if(totalElement)
 totalElement.textContent =
 total.toLocaleString()+" $";
 
 
 
 }
+
 
 
 
@@ -253,13 +272,13 @@ updateCart();
 
 
 
+
 // ==========================
 // SAUVEGARDE
 // ==========================
 
 
 function saveCart(){
-
 
 localStorage.setItem(
 
@@ -269,7 +288,6 @@ JSON.stringify(cart)
 
 );
 
-
 }
 
 
@@ -278,6 +296,9 @@ JSON.stringify(cart)
 // ==========================
 // OUVRIR COMMANDE
 // ==========================
+
+
+if(checkoutBtn){
 
 
 checkoutBtn.addEventListener("click",()=>{
@@ -298,6 +319,9 @@ popup.classList.add("active");
 });
 
 
+}
+
+
 
 
 
@@ -306,19 +330,26 @@ popup.classList.add("active");
 // ==========================
 
 
+if(sendOrderBtn){
+
+
 sendOrderBtn.addEventListener("click",async()=>{
+
 
 
 const name =
 document.getElementById("clientName").value;
 
 
+
 const phone =
 document.getElementById("clientPhone").value;
 
 
+
 const location =
 document.getElementById("clientLocation").value;
+
 
 
 const file =
@@ -326,31 +357,51 @@ document.getElementById("paymentProof").files[0];
 
 
 
+const deliveryDate =
+orderDate ? orderDate.value : "";
 
-if(!name || !phone || !location){
 
-alert("Merci de remplir toutes les informations.");
+
+
+
+if(!name || !phone || !location || !deliveryDate){
+
+
+alert(
+"Merci de remplir toutes les informations."
+);
+
 
 return;
 
+
 }
+
+
 
 
 
 if(!file){
 
-alert("Merci d'ajouter une preuve de paiement.");
+
+alert(
+"Merci d'ajouter une preuve de paiement."
+);
+
 
 return;
+
 
 }
 
 
 
 
-let total=0;
 
-let products="";
+
+let total = 0;
+
+let products = "";
 
 
 
@@ -360,7 +411,8 @@ cart.forEach(item=>{
 total += item.total;
 
 
-products += 
+
+products +=
 `• ${item.name} x${item.quantity} - ${item.total}$\n`;
 
 
@@ -371,7 +423,10 @@ products +=
 
 
 
+
+
 const formData = new FormData();
+
 
 
 
@@ -392,6 +447,13 @@ phone
 formData.append(
 "location",
 location
+);
+
+
+
+formData.append(
+"deliveryDate",
+deliveryDate
 );
 
 
@@ -420,13 +482,14 @@ file
 
 
 
+
 try{
 
 
 sendOrderBtn.textContent="Envoi...";
 
-
 sendOrderBtn.disabled=true;
+
 
 
 
@@ -441,16 +504,40 @@ body:formData
 
 
 
+
+
 if(!response.ok){
 
-throw new Error();
+throw new Error(
+"Erreur API"
+);
 
 }
 
 
 
 
-alert("Commande envoyée au LTD !");
+
+// POPUP SUCCES
+
+
+if(successPopup){
+
+successPopup.classList.add("active");
+
+}
+
+else{
+
+alert(
+"Commande envoyée au LTD !"
+);
+
+}
+
+
+
+
 
 
 
@@ -466,6 +553,9 @@ popup.classList.remove("active");
 
 
 
+
+
+
 document.getElementById("clientName").value="";
 
 document.getElementById("clientPhone").value="";
@@ -476,7 +566,16 @@ document.getElementById("paymentProof").value="";
 
 
 
+if(orderDate){
+
+orderDate.value="";
+
 }
+
+
+
+}
+
 
 
 
@@ -486,7 +585,9 @@ catch(error){
 console.error(error);
 
 
-alert("Erreur lors de l'envoi de la commande.");
+alert(
+"Erreur lors de l'envoi de la commande."
+);
 
 
 
@@ -494,12 +595,16 @@ alert("Erreur lors de l'envoi de la commande.");
 
 
 
+
 finally{
 
 
-sendOrderBtn.textContent="Valider la commande";
+sendOrderBtn.textContent =
+"Valider la commande";
+
 
 sendOrderBtn.disabled=false;
+
 
 
 }
@@ -509,11 +614,38 @@ sendOrderBtn.disabled=false;
 });
 
 
+}
+
+
+
 
 
 
 // ==========================
-// FERMER POPUP EN CLIQUANT DEHORS
+// FERMER POPUP SUCCESS
+// ==========================
+
+
+if(closeSuccess && successPopup){
+
+
+closeSuccess.addEventListener("click",()=>{
+
+
+successPopup.classList.remove("active");
+
+
+});
+
+
+}
+
+
+
+
+
+// ==========================
+// FERMER POPUP COMMANDE
 // ==========================
 
 
@@ -521,6 +653,8 @@ document.addEventListener("click",(e)=>{
 
 
 if(
+
+popup &&
 
 popup.classList.contains("active")
 
@@ -541,13 +675,17 @@ popup.classList.remove("active");
 }
 
 
-
 });
 
 
 
 
+
+
+// ==========================
 // START
+// ==========================
+
 
 updateCart();
 
