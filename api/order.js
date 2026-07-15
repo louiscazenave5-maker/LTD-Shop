@@ -44,6 +44,8 @@ export default async function handler(req, res) {
 
         const location = fields.location?.[0] || "Non renseigné";
 
+        const deliveryDate = fields.deliveryDate;
+        
         const products = fields.products?.[0] || "Aucun produit";
 
         const total = fields.total?.[0] || "0 $";
@@ -81,6 +83,11 @@ export default async function handler(req, res) {
                 {
                     name:"📍 Livraison",
                     value:location
+                },
+
+                {
+                    name: "📅 Date de livraison souhaitée",
+                    value: deliveryDate || "Non renseignée"
                 },
 
 
