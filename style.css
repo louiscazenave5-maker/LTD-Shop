@@ -892,4 +892,31 @@ width:92%;
 }
 
 
+.upload-label{
+
+display:block;
+
+margin-top:20px;
+
+font-weight:700;
+
+}
+
+
+#paymentProof{
+
+margin-top:10px;
+
+background:#0d2a85;
+
+padding:12px;
+
+border-radius:12px;
+
+width:100%;
+
+color:white;
+
+}        
+
 }
