@@ -1,15 +1,19 @@
 // ======================================
 // LTD SHOP - SCRIPT.JS
-// Compatible Vite
+// Compatible Vite + Vercel API
 // ======================================
 
 
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1526236247876571239/qUCWe3urgWPITBXMymMPmdkXUVMEMQ1SNiQJeIkpK2IKgeqYgSR736qJAquj2nnFhK0C";
+const API_URL = "/api/order";
 
 
+// ==========================
 // PANIER
+// ==========================
+
 
 let cart = JSON.parse(localStorage.getItem("ltdCart")) || [];
+
 
 
 // ELEMENTS
@@ -30,284 +34,296 @@ const checkoutBtn = document.querySelector(".checkout");
 
 const popup = document.querySelector(".popup");
 
-const popupButton = popup?.querySelector("button");
+const sendOrderBtn = document.getElementById("sendOrder");
 
 
 
-// ======================================
-// PANIER OUVERTURE
-// ======================================
+
+// ==========================
+// OUVERTURE PANIER
+// ==========================
 
 
-if(cartIcon && cartBox){
+if(cartIcon){
 
-    cartIcon.addEventListener("click",()=>{
+cartIcon.addEventListener("click",()=>{
 
-        cartBox.classList.toggle("active");
+    cartBox.classList.toggle("active");
 
-    });
+});
 
 }
 
 
 
-// ======================================
-// AJOUT PANIER
-// ======================================
+// ==========================
+// AJOUT AU PANIER
+// ==========================
 
 
 buttons.forEach(button=>{
 
 
-    button.addEventListener("click",()=>{
+button.addEventListener("click",()=>{
 
 
-        const card = button.closest(".card");
+const card = button.closest(".card");
 
 
-        const name = card.querySelector("h3").textContent;
+const name = 
+card.querySelector("h3").textContent;
 
 
-        const price = Number(
-            card.querySelector(".price")
-            .textContent
-            .replace(/\D/g,"")
-        );
+const price = Number(
 
+card.querySelector(".price")
+.textContent
+.replace(/\D/g,"")
 
-        const input = card.querySelector("input");
-
-
-        const quantity = input ? Number(input.value) : 1;
+);
 
 
 
-        cart.push({
+const quantity = Number(
 
-            name,
+card.querySelector("input").value
 
-            price,
-
-            quantity,
-
-            total: price * quantity
-
-        });
+) || 1;
 
 
 
-        saveCart();
+cart.push({
 
-        updateCart();
+name:name,
 
+price:price,
 
+quantity:quantity,
 
-        button.textContent="Ajouté ✓";
+total:price * quantity
 
-
-        setTimeout(()=>{
-
-            button.textContent="Ajouter au panier";
-
-        },1000);
+});
 
 
-    });
+
+saveCart();
+
+updateCart();
+
+
+
+button.textContent="Ajouté ✓";
+
+
+setTimeout(()=>{
+
+button.textContent="Ajouter au panier";
+
+},1000);
+
+
+
+});
 
 
 });
 
 
 
-// ======================================
+
+// ==========================
 // AFFICHAGE PANIER
-// ======================================
+// ==========================
 
 
 function updateCart(){
 
 
-    if(!cartItems) return;
+cartItems.innerHTML="";
 
 
-    cartItems.innerHTML="";
+let total=0;
 
-
-    let total = 0;
-
-    let count = 0;
+let count=0;
 
 
 
-    if(cart.length === 0){
+if(cart.length===0){
 
 
-        cartItems.innerHTML =
-        "<p>Votre panier est vide.</p>";
+cartItems.innerHTML=
+"<p>Votre panier est vide.</p>";
 
-
-    }
-
-
-
-    cart.forEach((item,index)=>{
-
-
-        total += item.total;
-
-        count += item.quantity;
-
-
-
-        const div = document.createElement("div");
-
-
-        div.className="cart-item";
-
-
-        div.innerHTML=`
-
-        <span>
-        ${item.name} x${item.quantity}
-        </span>
-
-        <span>
-        ${item.total.toLocaleString()} $
-        
-        <button class="remove">
-        ❌
-        </button>
-
-        </span>
-
-        `;
-
-
-
-        div.querySelector(".remove")
-        .addEventListener("click",()=>{
-
-            removeItem(index);
-
-        });
-
-
-
-        cartItems.appendChild(div);
-
-
-    });
-
-
-
-    if(cartCount)
-    cartCount.textContent=count;
-
-
-    if(totalElement)
-    totalElement.textContent =
-    total.toLocaleString()+" $";
 
 
 }
 
 
 
-
-// ======================================
-// SUPPRESSION
-// ======================================
+cart.forEach((item,index)=>{
 
 
-function removeItem(index){
+total += item.total;
 
-
-    cart.splice(index,1);
-
-
-    saveCart();
-
-    updateCart();
-
-
-}
+count += item.quantity;
 
 
 
-
-// ======================================
-// SAUVEGARDE
-// ======================================
+const div=document.createElement("div");
 
 
-function saveCart(){
+div.className="cart-item";
 
 
-    localStorage.setItem(
-        "ltdCart",
-        JSON.stringify(cart)
-    );
+div.innerHTML=`
+
+<span>
+${item.name} x${item.quantity}
+</span>
 
 
-}
+<span>
+
+${item.total.toLocaleString()} $
+
+<button class="remove">
+❌
+</button>
+
+</span>
+
+`;
 
 
 
-// ======================================
-// COMMANDER
-// ======================================
+div.querySelector(".remove")
+.addEventListener("click",()=>{
+
+removeItem(index);
+
+});
 
 
-if(checkoutBtn && popup){
 
+cartItems.appendChild(div);
 
-checkoutBtn.addEventListener("click",()=>{
-
-
-    if(cart.length===0){
-
-        alert("Votre panier est vide !");
-
-        return;
-
-    }
-
-
-    popup.classList.add("active");
 
 
 });
 
 
+
+cartCount.textContent=count;
+
+
+totalElement.textContent =
+total.toLocaleString()+" $";
+
+
+
 }
 
 
 
-// ======================================
+
+// ==========================
+// SUPPRESSION
+// ==========================
+
+
+function removeItem(index){
+
+
+cart.splice(index,1);
+
+
+saveCart();
+
+updateCart();
+
+
+}
+
+
+
+
+// ==========================
+// SAUVEGARDE
+// ==========================
+
+
+function saveCart(){
+
+
+localStorage.setItem(
+
+"ltdCart",
+
+JSON.stringify(cart)
+
+);
+
+
+}
+
+
+
+
+// ==========================
+// OUVRIR COMMANDE
+// ==========================
+
+
+checkoutBtn.addEventListener("click",()=>{
+
+
+if(cart.length===0){
+
+alert("Votre panier est vide !");
+
+return;
+
+}
+
+
+popup.classList.add("active");
+
+
+});
+
+
+
+
+
+// ==========================
 // ENVOI COMMANDE
-// ======================================
+// ==========================
 
 
-if(popupButton){
+sendOrderBtn.addEventListener("click",async()=>{
 
 
-popupButton.addEventListener("click",async()=>{
+const name =
+document.getElementById("clientName").value;
 
 
-const inputs = popup.querySelectorAll("input");
+const phone =
+document.getElementById("clientPhone").value;
 
 
-const nom = inputs[0].value;
-
-const telephone = inputs[1].value;
-
-const lieu = popup.querySelector("textarea").value;
+const location =
+document.getElementById("clientLocation").value;
 
 
+const file =
+document.getElementById("paymentProof").files[0];
 
-if(!nom || !telephone || !lieu){
 
-alert("Remplis toutes les informations.");
+
+
+if(!name || !phone || !location){
+
+alert("Merci de remplir toutes les informations.");
 
 return;
 
@@ -315,93 +331,120 @@ return;
 
 
 
+if(!file){
+
+alert("Merci d'ajouter une preuve de paiement.");
+
+return;
+
+}
+
+
+
+
 let total=0;
-let produits="";
+
+let products="";
+
+
 
 cart.forEach(item=>{
 
-    total += item.total;
 
-    produits +=
-    `• ${item.name} x${item.quantity} - ${item.total}$\n`;
+total += item.total;
+
+
+products += 
+`• ${item.name} x${item.quantity} - ${item.total}$\n`;
+
+
 
 });
 
 
 
 
-const data={
+
+const formData = new FormData();
 
 
-embeds:[{
 
-title:"🛒 Nouvelle commande LTD",
-
-color:5763719,
-
-
-fields:[
-
-{
-name:"👤 Client",
-value:nom
-},
-
-{
-name:"📞 Téléphone",
-value:telephone
-},
-
-{
-name:"📦 Produits",
-value:produits
-},
-
-{
-name:"📍 Livraison",
-value:lieu
-},
-
-{
-name:"💰 Total",
-value:total+" $"
-}
-
-],
+formData.append(
+"name",
+name
+);
 
 
-footer:{
-text:"LTD LS"
-},
+
+formData.append(
+"phone",
+phone
+);
 
 
-timestamp:new Date()
 
-}]
+formData.append(
+"location",
+location
+);
 
 
-};
+
+formData.append(
+"products",
+products
+);
+
+
+
+formData.append(
+"total",
+total.toLocaleString()+" $"
+);
+
+
+
+formData.append(
+"paymentProof",
+file
+);
+
+
+
 
 
 
 try{
 
 
-await fetch(WEBHOOK_URL,{
+sendOrderBtn.textContent="Envoi...";
+
+
+sendOrderBtn.disabled=true;
+
+
+
+
+const response = await fetch(API_URL,{
 
 method:"POST",
 
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify(data)
+body:formData
 
 });
 
 
 
-alert("Commande envoyée !");
+if(!response.ok){
+
+throw new Error();
+
+}
+
+
+
+
+alert("Commande envoyée au LTD !");
 
 
 
@@ -417,16 +460,40 @@ popup.classList.remove("active");
 
 
 
+document.getElementById("clientName").value="";
+
+document.getElementById("clientPhone").value="";
+
+document.getElementById("clientLocation").value="";
+
+document.getElementById("paymentProof").value="";
+
+
+
 }
 
 
 
-catch(e){
+catch(error){
 
 
-console.error(e);
+console.error(error);
 
-alert("Erreur commande");
+
+alert("Erreur lors de l'envoi de la commande.");
+
+
+
+}
+
+
+
+finally{
+
+
+sendOrderBtn.textContent="Valider la commande";
+
+sendOrderBtn.disabled=false;
 
 
 }
@@ -436,16 +503,47 @@ alert("Erreur commande");
 });
 
 
+
+
+
+// ==========================
+// FERMER POPUP EN CLIQUANT DEHORS
+// ==========================
+
+
+document.addEventListener("click",(e)=>{
+
+
+if(
+
+popup.classList.contains("active")
+
+&&
+
+!popup.contains(e.target)
+
+&&
+
+!checkoutBtn.contains(e.target)
+
+){
+
+
+popup.classList.remove("active");
+
+
 }
 
 
 
-// ======================================
-// DEMARRAGE
-// ======================================
+});
 
+
+
+
+// START
 
 updateCart();
 
 
-console.log("LTD SCRIPT CHARGE");
+console.log("LTD SHOP READY");
