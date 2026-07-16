@@ -606,6 +606,10 @@ formData.append(
 promoCode || "Aucun"
 );
 
+formData.append(
+"orderNumber",
+orderNumber
+);
 
 
 formData.append(
@@ -675,15 +679,17 @@ if(successPopup){
 
     const successText = successPopup.querySelector("p");
 
-    if(successText && data.orderNumber){
+    
+if(successText){
 
-        successText.innerHTML = `
-        Votre commande a bien été enregistrée.<br><br>
-        Numéro de commande : <b>${data.orderNumber}</b><br><br>
-        Le LTD vous contactera quand la commande sera prête.
-        `;
+    successText.innerHTML = `
+    Votre commande a bien été enregistrée.<br><br>
+    Numéro de commande : <b>${orderNumber}</b><br><br>
+    Le LTD vous contactera quand la commande sera prête.
+    `;
 
-    }
+}
+
 
 // Ferme le panier
 if(cartBox){
