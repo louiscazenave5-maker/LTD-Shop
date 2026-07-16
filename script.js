@@ -93,6 +93,10 @@ accountBox.style.fontWeight = "700";
 accountBox.innerHTML =
 `
 Compte de paiement : ${PAYMENT_ACCOUNT}
+<br>
+<span style="font-size:12px;font-weight:400;">
+Numéro de compte à mettre en justificatif du virement
+</span>
 `;
 
 
