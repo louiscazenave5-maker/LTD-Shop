@@ -6,6 +6,11 @@
 
 const API_URL = "/api/order";
 
+function generateOrderNumber(){
+
+    return "LTD-" + Math.floor(100000 + Math.random() * 900000);
+
+}
 
 // ==========================
 // CONFIGURATION
@@ -66,7 +71,11 @@ const closeSuccess = document.getElementById("closeSuccess");
 
 const orderDate = document.getElementById("orderDate");
 
+const downloadReceipt =
+document.getElementById("downloadReceipt");
 
+
+let lastReceipt = null;
 
 
 
@@ -512,7 +521,20 @@ const finalTotal =
 totalBefore - reduction;
 
 
+const orderNumber = generateOrderNumber();
 
+
+lastReceipt = {
+
+    number: orderNumber,
+
+    products: products,
+
+    total: finalTotal + " $",
+
+    date: new Date().toLocaleString("fr-FR")
+
+};
 
 
 
@@ -892,5 +914,240 @@ popup.classList.remove("active");
 
 updateCart();
 
+if(downloadReceipt){
+
+downloadReceipt.addEventListener("click",()=>{
+
+
+if(!lastReceipt){
+
+alert("Aucun reçu disponible.");
+
+return;
+
+}
+
+
+const { jsPDF } = window.jspdf;
+
+
+const doc = new jsPDF();
+
+
+
+// LOGO
+
+const logo = new Image();
+
+logo.src="/logo.png";
+
+
+logo.onload = ()=>{
+
+
+doc.addImage(
+
+logo,
+
+"PNG",
+
+75,
+
+15,
+
+60,
+
+60
+
+);
+
+
+
+// TITRE
+
+doc.setFontSize(22);
+
+doc.setTextColor(7,27,90);
+
+doc.text(
+
+"LTD LS",
+
+105,
+
+90,
+
+{align:"center"}
+
+);
+
+
+
+doc.setFontSize(14);
+
+doc.setTextColor(214,0,0);
+
+doc.text(
+
+"Limited Gasoline",
+
+105,
+
+100,
+
+{align:"center"}
+
+);
+
+
+
+
+// INFORMATIONS
+
+doc.setTextColor(0,0,0);
+
+doc.setFontSize(12);
+
+
+doc.text(
+
+`Commande : ${lastReceipt.number}`,
+
+20,
+
+130
+
+);
+
+
+doc.text(
+
+`Date : ${lastReceipt.date}`,
+
+20,
+
+140
+
+);
+
+
+
+
+// SEPARATION
+
+doc.line(
+
+20,
+
+150,
+
+190,
+
+150
+
+);
+
+
+
+
+// PRODUITS
+
+doc.setFontSize(14);
+
+doc.text(
+
+"Produits :",
+
+20,
+
+170
+
+);
+
+
+doc.setFontSize(11);
+
+
+doc.text(
+
+lastReceipt.products,
+
+20,
+
+185
+
+);
+
+
+
+
+// TOTAL
+
+doc.setFontSize(16);
+
+doc.setTextColor(214,0,0);
+
+doc.text(
+
+`Total : ${lastReceipt.total}`,
+
+20,
+
+240
+
+);
+
+
+
+// MESSAGE
+
+doc.setTextColor(0,0,0);
+
+doc.setFontSize(12);
+
+
+doc.text(
+
+"Merci pour votre confiance.",
+
+105,
+
+270,
+
+{align:"center"}
+
+);
+
+
+doc.text(
+
+"LTD LS",
+
+105,
+
+280,
+
+{align:"center"}
+
+);
+
+
+
+// TELECHARGEMENT
+
+doc.save(
+
+`${lastReceipt.number}.pdf`
+
+);
+
+
+};
+
+
+});
+
+
+}
 
 console.log("LTD SHOP READY");
