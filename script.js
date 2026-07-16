@@ -951,160 +951,474 @@ const { jsPDF } = window.jspdf;
 const doc = new jsPDF();
 
 
-// LOGO
+
+// ==========================
+// CHARGEMENT LOGO
+// ==========================
 
 const logo = new Image();
 
-logo.src="./logo.png";
+logo.src="/logo.png";
+
 
 
 logo.onload = () => {
 
-    doc.addImage(
-        logo,
-        "PNG",
-        75,
-        15,
-        60,
-        60
-    );
-
-    createPDF(doc);
+    createPDF();
 
 };
 
 
 logo.onerror = () => {
 
-    createPDF(doc);
+    createPDF();
 
 };
 
 
 
 
-function createPDF(doc){
 
-    // Fond
-    doc.setFillColor(7,27,90);
-    doc.rect(0,0,210,297,"F");
+function createPDF(){
 
-    // Bande rouge haut
-    doc.setFillColor(214,0,0);
-    doc.rect(0,0,210,18,"F");
 
-    // Logo
-    try{
-        doc.addImage(logo,"PNG",80,25,50,50);
-    }catch(e){}
 
-    // Titre
-    doc.setTextColor(255,255,255);
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(24);
-    doc.text("LTD LS",105,88,{align:"center"});
+// ==========================
+// FOND
+// ==========================
 
-    doc.setTextColor(214,0,0);
-    doc.setFontSize(13);
-    doc.text("LIMITED GASOLINE",105,97,{align:"center"});
 
-    // Bloc informations
-    doc.setDrawColor(255,255,255);
-    doc.setLineWidth(0.5);
-    doc.roundedRect(18,110,174,42,4,4);
+doc.setFillColor(7,27,90);
 
-    doc.setTextColor(255,255,255);
-    doc.setFontSize(12);
+doc.rect(
+0,
+0,
+210,
+297,
+"F"
+);
 
-    doc.text("N° de commande :",25,124);
-    doc.setFont("helvetica","bold");
-    doc.text(lastReceipt.number,82,124);
 
-    doc.setFont("helvetica","normal");
-    doc.text("Date :",25,138);
-    doc.text(lastReceipt.date,45,138);
 
-    doc.setFont("helvetica","bold");
-doc.setTextColor(255,255,255);
-doc.text("CLIENT",25,155);
+// BANDE ROUGE
 
-doc.setFont("helvetica","normal");
+doc.setFillColor(214,0,0);
+
+doc.rect(
+0,
+0,
+210,
+12,
+"F"
+);
+
+
+
+
+
+// ==========================
+// LOGO
+// ==========================
+
+
+try{
+
+doc.addImage(
+logo,
+"PNG",
+80,
+25,
+50,
+50
+);
+
+}catch(e){}
+
+
+
+
+
+
+// ==========================
+// TITRE
+// ==========================
+
+
+doc.setFont(
+"helvetica",
+"bold"
+);
+
+
+doc.setFontSize(26);
+
+
+doc.setTextColor(
+255,
+255,
+255
+);
+
+
+doc.text(
+"LTD LS",
+105,
+95,
+{
+align:"center"
+}
+);
+
+
+
+doc.setFontSize(13);
+
+
+doc.setTextColor(
+214,
+0,
+0
+);
+
+
+doc.text(
+"LIMITED GASOLINE",
+105,
+105,
+{
+align:"center"
+}
+);
+
+
+
+
+
+// ==========================
+// COMMANDE
+// ==========================
+
+
+doc.setDrawColor(
+255,
+255,
+255
+);
+
+
+doc.roundedRect(
+15,
+120,
+180,
+35,
+5,
+5
+);
+
+
+
+doc.setFontSize(12);
+
+doc.setTextColor(
+255,
+255,
+255
+);
+
+
+doc.setFont(
+"helvetica",
+"bold"
+);
+
+
+doc.text(
+"COMMANDE",
+105,
+132,
+{
+align:"center"
+}
+);
+
+
+
+doc.setFont(
+"helvetica",
+"normal"
+);
+
+
+doc.text(
+"N° : " + lastReceipt.number,
+25,
+145
+);
+
+
+doc.text(
+"Date : " + lastReceipt.date,
+25,
+153
+);
+
+
+
+
+
+
+
+// ==========================
+// CLIENT
+// ==========================
+
+
+doc.roundedRect(
+15,
+165,
+180,
+55,
+5,
+5
+);
+
+
+
+doc.setFont(
+"helvetica",
+"bold"
+);
+
+
+doc.setTextColor(
+214,
+0,
+0
+);
+
+
+doc.text(
+"CLIENT",
+105,
+178,
+{
+align:"center"
+}
+);
+
+
+
+doc.setFont(
+"helvetica",
+"normal"
+);
+
+
+doc.setTextColor(
+255,
+255,
+255
+);
+
+
 
 doc.text(
 "Nom : " + lastReceipt.name,
 25,
-168
+190
 );
+
 
 doc.text(
 "Téléphone : " + lastReceipt.phone,
 25,
-178
+200
 );
+
 
 doc.text(
-"Lieu de livraison : " + lastReceipt.location,
+"Lieu : " + lastReceipt.location,
 25,
-188
+210
 );
+
 
 doc.text(
-"Date souhaitée : " + lastReceipt.deliveryDate,
+"Livraison : " + lastReceipt.deliveryDate,
 25,
-198
+220
 );
 
-    // Produits
-    doc.roundedRect(18,162,174,82,4,4);
 
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(15);
-    doc.setTextColor(214,0,0);
-    doc.text("PRODUITS",105,176,{align:"center"});
 
-    doc.setFont("helvetica","normal");
-    doc.setTextColor(255,255,255);
-    doc.setFontSize(11);
 
-    const lines = doc.splitTextToSize(lastReceipt.products,150);
-    doc.text(lines,28,190);
 
-    // Encadré total
-    doc.setFillColor(214,0,0);
-    doc.roundedRect(30,255,150,22,5,5,"F");
 
-    doc.setFont("helvetica","bold");
-    doc.setFontSize(18);
-    doc.setTextColor(255,255,255);
 
-    doc.text(
-        "TOTAL : " + lastReceipt.total,
-        105,
-        269,
-        {align:"center"}
-    );
+// ==========================
+// PRODUITS
+// ==========================
 
-    // Pied de page
-    doc.setFontSize(10);
-    doc.setFont("helvetica","normal");
 
-    doc.text(
-        "Merci pour votre confiance.",
-        105,
-        287,
-        {align:"center"}
-    );
+doc.roundedRect(
+15,
+230,
+180,
+35,
+5,
+5
+);
 
-    doc.text(
-        "LTD LS - Limited Gasoline",
-        105,
-        293,
-        {align:"center"}
-    );
 
-doc.save(lastReceipt.number + ".pdf");
+
+doc.setFont(
+"helvetica",
+"bold"
+);
+
+
+doc.setTextColor(
+214,
+0,
+0
+);
+
+
+doc.text(
+"PRODUITS",
+105,
+242,
+{
+align:"center"
+}
+);
+
+
+
+doc.setFont(
+"helvetica",
+"normal"
+);
+
+
+doc.setTextColor(
+255,
+255,
+255
+);
+
+
+doc.setFontSize(10);
+
+
+
+const productsLines =
+doc.splitTextToSize(
+lastReceipt.products,
+160
+);
+
+
+
+doc.text(
+productsLines,
+25,
+254
+);
+
+
+
+
+
+
+
+// ==========================
+// TOTAL
+// ==========================
+
+
+doc.setFillColor(
+214,
+0,
+0
+);
+
+
+doc.roundedRect(
+25,
+272,
+160,
+15,
+5,
+5,
+"F"
+);
+
+
+
+doc.setFont(
+"helvetica",
+"bold"
+);
+
+
+doc.setFontSize(16);
+
+
+doc.setTextColor(
+255,
+255,
+255
+);
+
+
+doc.text(
+"TOTAL : " + lastReceipt.total,
+105,
+283,
+{
+align:"center"
+}
+);
+
+
+
+
+
+
+// ==========================
+// FOOTER
+// ==========================
+
+
+doc.setFontSize(10);
+
+doc.setFont(
+"helvetica",
+"normal"
+);
+
+
+doc.text(
+"Merci pour votre confiance",
+105,
+290,
+{
+align:"center"
+}
+);
+
+
+
+doc.save(
+lastReceipt.number + ".pdf"
+);
+
+
 
 }
+
+
 
 });
 
