@@ -941,9 +941,7 @@ return;
 
 const { jsPDF } = window.jspdf;
 
-
 const doc = new jsPDF();
-
 
 
 // LOGO
@@ -964,19 +962,20 @@ logo.onload = () => {
         60
     );
 
-    createPDF(doc);
+    createPDF();
 
 };
 
 
 logo.onerror = () => {
 
-    createPDF(doc);
+    createPDF();
 
 };
 
 
-function createPDF(doc){
+
+function createPDF(){
 
 
 doc.setFontSize(22);
@@ -1034,6 +1033,8 @@ doc.line(
 
 
 
+doc.setFontSize(14);
+
 doc.text(
 "Produits :",
 20,
@@ -1068,6 +1069,7 @@ doc.setTextColor(0,0,0);
 
 doc.setFontSize(12);
 
+
 doc.text(
 "Merci pour votre confiance.",
 105,
@@ -1085,19 +1087,23 @@ doc.text(
 
 
 
+// TELECHARGEMENT PDF
+
+doc.save(
+`${lastReceipt.number}.pdf`
+);
 
 
 }
 
 
 
-
-
-};
-
-
 });
+
+
+}
 
 
 
 console.log("LTD SHOP READY");
+
