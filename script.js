@@ -1323,7 +1323,7 @@ lastReceipt.products,
 doc.text(
 productsLines,
 25,
-234
+239
 );
 
 
