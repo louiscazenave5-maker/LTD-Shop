@@ -220,6 +220,22 @@ transition:.3s;
 
 }
 
+nav ul li a {
+    color:white;
+    text-decoration:none;
+    font-weight:500;
+}
+
+
+nav ul li a:visited {
+    color:white;
+}
+
+
+nav ul li a:hover {
+    color:#ff4d4d;
+}
+
 
 
 nav ul li:hover{
@@ -1010,25 +1026,4 @@ font-weight:700;
     color: #d60000;
 }
 
-}
-
-nav ul li a.discord-contact {
-    all: unset;
-    cursor: pointer;
-    color: white;
-    font-size: inherit;
-    font-weight: 700;
-    text-decoration: none;
-    display: block;
-}
-
-
-nav ul li a.discord-contact:visited {
-    color: white;
-}
-
-
-nav ul li a.discord-contact:hover {
-    color: #D60000;
-}
 
