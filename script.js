@@ -521,7 +521,7 @@ const finalTotal =
 totalBefore - reduction;
 
 
-let orderNumber = "";
+let orderNumber = generateOrderNumber();
 
 lastReceipt = {
 
@@ -666,7 +666,13 @@ throw new Error(
 const data = await response.json();
 
 
+if(data.orderNumber){
 
+    orderNumber = data.orderNumber;
+
+    lastReceipt.number = orderNumber;
+
+}
 
 
 
@@ -947,43 +953,41 @@ const logo = new Image();
 logo.src="/logo.png";
 
 
-logo.onload = ()=>{
+logo.onload = () => {
+
+    doc.addImage(
+        logo,
+        "PNG",
+        75,
+        15,
+        60,
+        60
+    );
+
+    createPDF(doc);
+
+};
 
 
-doc.addImage(
+logo.onerror = () => {
 
-logo,
+    createPDF(doc);
 
-"PNG",
-
-75,
-
-15,
-
-60,
-
-60
-
-);
+};
 
 
+function createPDF(doc){
 
-// TITRE
 
 doc.setFontSize(22);
 
 doc.setTextColor(7,27,90);
 
 doc.text(
-
 "LTD LS",
-
 105,
-
 90,
-
 {align:"center"}
-
 );
 
 
@@ -993,21 +997,13 @@ doc.setFontSize(14);
 doc.setTextColor(214,0,0);
 
 doc.text(
-
 "Limited Gasoline",
-
 105,
-
 100,
-
 {align:"center"}
-
 );
 
 
-
-
-// INFORMATIONS
 
 doc.setTextColor(0,0,0);
 
@@ -1015,26 +1011,86 @@ doc.setFontSize(12);
 
 
 doc.text(
-
 `Commande : ${lastReceipt.number}`,
-
 20,
-
 130
-
 );
 
 
 doc.text(
-
 `Date : ${lastReceipt.date}`,
-
 20,
-
 140
-
 );
 
+
+
+doc.line(
+20,
+150,
+190,
+150
+);
+
+
+
+doc.text(
+"Produits :",
+20,
+170
+);
+
+
+
+doc.setFontSize(11);
+
+doc.text(
+lastReceipt.products,
+20,
+185
+);
+
+
+
+doc.setFontSize(16);
+
+doc.setTextColor(214,0,0);
+
+doc.text(
+`Total : ${lastReceipt.total}`,
+20,
+240
+);
+
+
+
+doc.setTextColor(0,0,0);
+
+doc.setFontSize(12);
+
+doc.text(
+"Merci pour votre confiance.",
+105,
+270,
+{align:"center"}
+);
+
+
+doc.text(
+"LTD LS",
+105,
+280,
+{align:"center"}
+);
+
+
+
+doc.save(
+`${lastReceipt.number}.pdf`
+);
+
+
+}
 
 
 
