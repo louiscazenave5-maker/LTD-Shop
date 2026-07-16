@@ -527,6 +527,14 @@ lastReceipt = {
 
     number: orderNumber,
 
+    name: name,
+
+    phone: phone,
+
+    location: location,
+
+    deliveryDate: deliveryDate,
+
     products: products,
 
     total: finalTotal + " $",
@@ -534,7 +542,6 @@ lastReceipt = {
     date: new Date().toLocaleString("fr-FR")
 
 };
-
 
 
 
@@ -948,7 +955,7 @@ const doc = new jsPDF();
 
 const logo = new Image();
 
-logo.src="/logo.png";
+logo.src="./logo.png";
 
 
 logo.onload = () => {
@@ -1016,6 +1023,36 @@ function createPDF(doc){
     doc.setFont("helvetica","normal");
     doc.text("Date :",25,138);
     doc.text(lastReceipt.date,45,138);
+
+    doc.setFont("helvetica","bold");
+doc.setTextColor(255,255,255);
+doc.text("CLIENT",25,155);
+
+doc.setFont("helvetica","normal");
+
+doc.text(
+"Nom : " + lastReceipt.name,
+25,
+168
+);
+
+doc.text(
+"Téléphone : " + lastReceipt.phone,
+25,
+178
+);
+
+doc.text(
+"Lieu de livraison : " + lastReceipt.location,
+25,
+188
+);
+
+doc.text(
+"Date souhaitée : " + lastReceipt.deliveryDate,
+25,
+198
+);
 
     // Produits
     doc.roundedRect(18,162,174,82,4,4);
