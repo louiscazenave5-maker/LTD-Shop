@@ -37,9 +37,9 @@ export default async function handler(req, res) {
 
     const form = formidable({
 
-        multiples:false,
+        multiples: false,
 
-        maxFileSize:8 * 1024 * 1024
+        maxFileSize: 8 * 1024 * 1024
 
     });
 
@@ -52,14 +52,13 @@ export default async function handler(req, res) {
 
 
 
+
         const name =
             fields.name?.[0] || "Inconnu";
 
 
-
         const phone =
             fields.phone?.[0] || "Non renseigné";
-
 
 
         const location =
@@ -98,31 +97,29 @@ export default async function handler(req, res) {
 
 
 
-        const total =
-    fields.total?.[0] || "0 $";
-
-const totalBefore =
-    fields.totalBefore?.[0] || "0 $";
-
-const discount =
-    fields.discount?.[0] || "0%";
-
-const reduction =
-    fields.reduction?.[0] || "0 $";
-
-const promoCode =
-    fields.promoCode?.[0] || "Aucun";
-
-
-
 
         const products =
             fields.products?.[0] || "Aucun produit";
 
 
-
         const total =
             fields.total?.[0] || "0 $";
+
+
+        const totalBefore =
+            fields.totalBefore?.[0] || "0 $";
+
+
+        const discount =
+            fields.discount?.[0] || "0%";
+
+
+        const reduction =
+            fields.reduction?.[0] || "0 $";
+
+
+        const promoCode =
+            fields.promoCode?.[0] || "Aucun";
 
 
 
@@ -139,58 +136,102 @@ const promoCode =
         const embed = {
 
 
-            title:"Nouvelle Commande",
+            title: "Nouvelle Commande",
 
 
-            color:5763719,
+            color: 5763719,
 
 
 
             fields:[
 
 
-
                 {
+
                     name:"Client",
+
                     value:name,
+
                     inline:true
+
                 },
 
 
                 {
+
                     name:"Téléphone",
+
                     value:phone,
+
                     inline:true
+
                 },
 
 
                 {
+
                     name:"Lieu de livraison",
+
                     value:location
+
                 },
 
 
                 {
+
                     name:"Date de livraison souhaitée",
+
                     value:deliveryDate
+
                 },
 
 
                 {
+
                     name:"Code promotionnel",
-                    value:promoCode
+
+                    value:promoCode,
+
+                    inline:true
+
                 },
 
 
                 {
+
+                    name:"Réduction",
+
+                    value:`${discount} (-${reduction})`,
+
+                    inline:true
+
+                },
+
+
+                {
+
+                    name:"Prix avant réduction",
+
+                    value:totalBefore
+
+                },
+
+
+                {
+
                     name:"Produits",
+
                     value:products.substring(0,1000)
+
                 },
 
 
                 {
-                    name:"Total",
+
+                    name:"Total final",
+
                     value:total
+
                 }
 
 
@@ -210,6 +251,7 @@ const promoCode =
 
 
         };
+
 
 
 
@@ -335,7 +377,7 @@ const promoCode =
 
 
 
-    } catch(error){
+    }catch(error){
 
 
         console.error(
