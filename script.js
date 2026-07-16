@@ -638,6 +638,8 @@ throw new Error(
 
 }
 
+const data = await response.json();
+
 
 
 
@@ -647,8 +649,20 @@ throw new Error(
 
 if(successPopup){
 
-successPopup.classList.add("active");
+    successPopup.classList.add("active");
 
+
+    const successText = successPopup.querySelector("p");
+
+    if(successText && data.orderNumber){
+
+        successText.innerHTML = `
+        Votre commande a bien été enregistrée.<br><br>
+        Numéro de commande : <b>${data.orderNumber}</b><br><br>
+        Le LTD vous contactera quand la commande sera prête.
+        `;
+
+    }
 
 // Ferme le panier
 if(cartBox){
