@@ -645,20 +645,27 @@ throw new Error(
 
 // POPUP SUCCES
 
-
 if(successPopup){
 
-successPopup.classList.add("active");
+    successPopup.classList.add("active");
+
+
+    // Fermer le panier
+    if(cartBox){
+
+        cartBox.classList.remove("active");
+
+    }
+
+
+}else{
+
+    alert(
+    "Commande envoyée au LTD !"
+    );
 
 }
 
-else{
-
-alert(
-"Commande envoyée au LTD !"
-);
-
-}
 
 
 
