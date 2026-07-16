@@ -975,134 +975,97 @@ logo.onerror = () => {
 
 
 
-function createPDF(){
+function createPDF(doc){
 
+    // Fond
+    doc.setFillColor(7,27,90);
+    doc.rect(0,0,210,297,"F");
 
-doc.setFontSize(22);
+    // Bande rouge haut
+    doc.setFillColor(214,0,0);
+    doc.rect(0,0,210,18,"F");
 
-doc.setTextColor(7,27,90);
+    // Logo
+    try{
+        doc.addImage(logo,"PNG",80,25,50,50);
+    }catch(e){}
 
-doc.text(
-"LTD LS",
-105,
-90,
-{align:"center"}
-);
+    // Titre
+    doc.setTextColor(255,255,255);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(24);
+    doc.text("LTD LS",105,88,{align:"center"});
 
+    doc.setTextColor(214,0,0);
+    doc.setFontSize(13);
+    doc.text("LIMITED GASOLINE",105,97,{align:"center"});
 
+    // Bloc informations
+    doc.setDrawColor(255,255,255);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(18,110,174,42,4,4);
 
-doc.setFontSize(14);
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(12);
 
-doc.setTextColor(214,0,0);
+    doc.text("N° de commande :",25,124);
+    doc.setFont("helvetica","bold");
+    doc.text(lastReceipt.number,82,124);
 
-doc.text(
-"Limited Gasoline",
-105,
-100,
-{align:"center"}
-);
+    doc.setFont("helvetica","normal");
+    doc.text("Date :",25,138);
+    doc.text(lastReceipt.date,45,138);
 
+    // Produits
+    doc.roundedRect(18,162,174,82,4,4);
 
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(15);
+    doc.setTextColor(214,0,0);
+    doc.text("PRODUITS",105,176,{align:"center"});
 
-doc.setTextColor(0,0,0);
+    doc.setFont("helvetica","normal");
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(11);
 
-doc.setFontSize(12);
+    const lines = doc.splitTextToSize(lastReceipt.products,150);
+    doc.text(lines,28,190);
 
+    // Encadré total
+    doc.setFillColor(214,0,0);
+    doc.roundedRect(30,255,150,22,5,5,"F");
 
-doc.text(
-`Commande : ${lastReceipt.number}`,
-20,
-130
-);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(18);
+    doc.setTextColor(255,255,255);
 
+    doc.text(
+        "TOTAL : " + lastReceipt.total,
+        105,
+        269,
+        {align:"center"}
+    );
 
-doc.text(
-`Date : ${lastReceipt.date}`,
-20,
-140
-);
+    // Pied de page
+    doc.setFontSize(10);
+    doc.setFont("helvetica","normal");
 
+    doc.text(
+        "Merci pour votre confiance.",
+        105,
+        287,
+        {align:"center"}
+    );
 
+    doc.text(
+        "LTD LS - Limited Gasoline",
+        105,
+        293,
+        {align:"center"}
+    );
 
-doc.line(
-20,
-150,
-190,
-150
-);
-
-
-
-doc.setFontSize(14);
-
-doc.text(
-"Produits :",
-20,
-170
-);
-
-
-
-doc.setFontSize(11);
-
-doc.text(
-lastReceipt.products,
-20,
-185
-);
-
-
-
-doc.setFontSize(16);
-
-doc.setTextColor(214,0,0);
-
-doc.text(
-`Total : ${lastReceipt.total}`,
-20,
-240
-);
-
-
-
-doc.setTextColor(0,0,0);
-
-doc.setFontSize(12);
-
-
-doc.text(
-"Merci pour votre confiance.",
-105,
-270,
-{align:"center"}
-);
-
-
-doc.text(
-"LTD LS",
-105,
-280,
-{align:"center"}
-);
-
-
-
-// TELECHARGEMENT PDF
-
-doc.save(
-`${lastReceipt.number}.pdf`
-);
-
-
+    doc.save(lastReceipt.number + ".pdf");
 }
-
-
-
-});
-
-
-}
-
 
 
 console.log("LTD SHOP READY");
