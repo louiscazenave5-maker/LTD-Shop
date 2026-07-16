@@ -98,8 +98,20 @@ export default async function handler(req, res) {
 
 
 
-        const promoCode =
-            fields.promoCode?.[0] || "Aucun";
+        const total =
+    fields.total?.[0] || "0 $";
+
+const totalBefore =
+    fields.totalBefore?.[0] || "0 $";
+
+const discount =
+    fields.discount?.[0] || "0%";
+
+const reduction =
+    fields.reduction?.[0] || "0 $";
+
+const promoCode =
+    fields.promoCode?.[0] || "Aucun";
 
 
 
