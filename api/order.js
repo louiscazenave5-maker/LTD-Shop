@@ -121,6 +121,9 @@ export default async function handler(req, res) {
         const promoCode =
             fields.promoCode?.[0] || "Aucun";
 
+        const orderNumber =
+"LTD-" + Date.now().toString().slice(-6);
+
 
 
 
@@ -136,7 +139,7 @@ export default async function handler(req, res) {
         const embed = {
 
 
-            title: "Nouvelle Commande",
+            title: `Commande ${orderNumber}`,
 
 
             color: 5763719,
