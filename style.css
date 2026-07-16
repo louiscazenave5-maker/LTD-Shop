@@ -1041,4 +1041,14 @@ nav ul li a:hover {
     color: #D60000 !important;
 }
 
+.discord-link,
+.discord-link:visited {
+    color:white !important;
+    text-decoration:none !important;
+}
+
+.discord-link:hover {
+    color:#D60000 !important;
+}
+
 }
