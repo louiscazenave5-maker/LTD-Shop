@@ -1152,14 +1152,14 @@ doc.setFont(
 doc.text(
 "N° : " + lastReceipt.number,
 25,
-125
+135
 );
 
 
 doc.text(
 "Date : " + lastReceipt.date,
 25,
-133
+143
 );
 
 
@@ -1402,7 +1402,7 @@ doc.setFont(
 doc.text(
 "Merci pour votre confiance",
 105,
-300,
+294,
 {
 align:"center"
 }
