@@ -1206,6 +1206,5 @@ doc.save(
 });
 
 
-}
 
 console.log("LTD SHOP READY");
