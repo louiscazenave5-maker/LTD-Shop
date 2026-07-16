@@ -1026,4 +1026,70 @@ font-weight:700;
     color: #d60000;
 }
 
+/* ==========================
+        PROMOTIONS
+========================== */
+
+.promotions{
+
+    padding:120px 8%;
+
+}
+
+
+.promo-box{
+
+    max-width:700px;
+
+    margin:auto;
+
+    background:rgba(214,0,0,.15);
+
+    border:1px solid rgba(214,0,0,.4);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:25px;
+
+    padding:40px;
+
+    text-align:center;
+
+}
+
+
+.promo-box h3{
+
+    font-size:32px;
+
+    margin-bottom:20px;
+
+}
+
+
+.promo-box p{
+
+    opacity:.8;
+
+    font-size:18px;
+
+    margin-bottom:25px;
+
+}
+
+
+.promo-box span{
+
+    display:inline-block;
+
+    background:#D60000;
+
+    padding:12px 30px;
+
+    border-radius:30px;
+
+    font-weight:700;
+
+}
+
 }
