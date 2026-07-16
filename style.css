@@ -1010,4 +1010,19 @@ font-weight:700;
     color: #d60000;
 }
 
+nav ul li a{
+
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+
+}
+
+
+nav ul li a:hover{
+
+    color:#D60000;
+
+}
+
 }
