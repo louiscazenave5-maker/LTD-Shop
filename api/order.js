@@ -369,11 +369,11 @@ export default async function handler(req, res) {
 
         return res.status(200).json({
 
-            success:true,
+    success:true,
 
-            message:"Commande envoyée"
+    orderNumber: orderNumber
 
-        });
+});
 
 
 
