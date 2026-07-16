@@ -696,7 +696,7 @@ sound.play().catch(error=>{
     }
 
 
-}else{
+     else{
 
     alert(
     "Commande envoyée au LTD !"
