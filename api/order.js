@@ -1,5 +1,6 @@
 import formidable from "formidable";
 import fs from "fs";
+import PDFDocument from "pdfkit";
 
 export const config = {
     api: {
@@ -123,7 +124,91 @@ export default async function handler(req, res) {
         const orderNumber =
             "LTD-" + Math.floor(100000 + Math.random() * 900000);
 
+      const pdfBuffer = await new Promise((resolve)=>{
 
+    const doc = new PDFDocument();
+
+    let buffers = [];
+
+    doc.on("data", buffers.push.bind(buffers));
+
+    doc.on("end",()=>{
+
+        resolve(Buffer.concat(buffers));
+
+    });
+
+
+    doc.fontSize(22)
+    .fillColor("#071B5A")
+    .text("LTD LS",{
+        align:"center"
+    });
+
+
+    doc.moveDown();
+
+
+    doc.fontSize(14)
+    .fillColor("#D60000")
+    .text("LIMITED GASOLINE",{
+        align:"center"
+    });
+
+
+    doc.moveDown(2);
+
+
+    doc.fillColor("black")
+    .fontSize(12);
+
+
+    doc.text(
+        `Commande : ${orderNumber}`
+    );
+
+
+    doc.text(
+        `Client : ${name}`
+    );
+
+
+    doc.text(
+        `Téléphone : ${phone}`
+    );
+
+
+    doc.text(
+        `Lieu : ${location}`
+    );
+
+
+    doc.moveDown();
+
+
+    doc.text(
+        "Produits :"
+    );
+
+
+    doc.text(
+        products
+    );
+
+
+    doc.moveDown();
+
+
+    doc.fontSize(16)
+    .fillColor("#D60000")
+    .text(
+        `TOTAL : ${total}`
+    );
+
+
+    doc.end();
+
+});
 
 
         const proof =
@@ -243,24 +328,27 @@ export default async function handler(req, res) {
 
         if(proof){
 
-
-            const buffer = fs.readFileSync(
-                proof.filepath
-            );
-
-
-            discordForm.append(
-
-                "files[0]",
-
-                new Blob([buffer]),
-
-                proof.originalFilename || "preuve-paiement"
-
-            );
+    const buffer = fs.readFileSync(
+        proof.filepath
+    );
 
 
-        }
+    discordForm.append(
+        "files[0]",
+        new Blob([buffer]),
+        proof.originalFilename || "preuve-paiement.png"
+    );
+
+}
+
+
+// AJOUT DU RECU PDF
+
+discordForm.append(
+    "files[1]",
+    new Blob([pdfBuffer]),
+    `${orderNumber}.pdf`
+);
 
 
 
