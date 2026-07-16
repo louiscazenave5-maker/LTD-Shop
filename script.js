@@ -1085,9 +1085,6 @@ doc.text(
 
 
 
-doc.save(
-`${lastReceipt.number}.pdf`
-);
 
 
 }
