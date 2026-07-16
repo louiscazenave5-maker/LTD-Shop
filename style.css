@@ -1,7 +1,7 @@
-/* ==========================
-        LTD SHOP
-     PREMIUM E-COMMERCE UI
-========================== */
+/* =====================================
+          LTD LS SHOP PREMIUM
+          COMPLETE STYLE CSS
+===================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
@@ -9,15 +9,17 @@
 :root{
 
     --blue:#071B5A;
-    --blue2:#0A2D8B;
+    --blue-light:#0A2D8B;
     --red:#D60000;
-    --redHover:#ff1a1a;
+    --red-light:#ff2a2a;
 
-    --glass:rgba(255,255,255,.08);
-    --glassBorder:rgba(255,255,255,.15);
+    --glass:rgba(255,255,255,0.08);
+    --border:rgba(255,255,255,0.15);
 
 }
 
+
+/* RESET */
 
 *{
 
@@ -29,7 +31,6 @@
 }
 
 
-
 html{
 
     scroll-behavior:smooth;
@@ -37,15 +38,19 @@ html{
 }
 
 
-
 body{
 
+    min-height:100vh;
+
     background:
-    linear-gradient(180deg,#04113B,#071B5A,#081D69);
+    linear-gradient(
+        180deg,
+        #04113B,
+        #071B5A,
+        #081D69
+    );
 
     color:white;
-
-    min-height:100vh;
 
     overflow-x:hidden;
 
@@ -53,9 +58,9 @@ body{
 
 
 
-/* ==========================
-        BACKGROUND FX
-========================== */
+/* =====================================
+            BACKGROUND EFFECT
+===================================== */
 
 
 body::before{
@@ -67,14 +72,15 @@ position:fixed;
 width:700px;
 height:700px;
 
+background:#d6000030;
+
+filter:blur(130px);
+
 border-radius:50%;
 
-background:#d6000025;
+top:-200px;
 
-filter:blur(120px);
-
-top:-150px;
-right:-150px;
+right:-200px;
 
 z-index:-1;
 
@@ -91,14 +97,15 @@ position:fixed;
 width:600px;
 height:600px;
 
+background:#004cff30;
+
+filter:blur(130px);
+
 border-radius:50%;
 
-background:#004cff25;
-
-filter:blur(120px);
-
 bottom:-200px;
-left:-150px;
+
+left:-200px;
 
 z-index:-1;
 
@@ -106,7 +113,7 @@ z-index:-1;
 
 
 
-/* SCROLL */
+/* SCROLLBAR */
 
 
 ::-webkit-scrollbar{
@@ -126,9 +133,9 @@ border-radius:20px;
 
 
 
-/* ==========================
-        NAVBAR
-========================== */
+/* =====================================
+              NAVBAR
+===================================== */
 
 
 nav{
@@ -142,19 +149,20 @@ width:100%;
 
 height:85px;
 
+padding:0 60px;
+
 display:flex;
 
 align-items:center;
 
 justify-content:space-between;
 
-padding:0 60px;
 
-background:rgba(5,10,40,.65);
+background:rgba(5,10,40,.75);
 
 backdrop-filter:blur(18px);
 
-border-bottom:1px solid rgba(255,255,255,.08);
+border-bottom:1px solid rgba(255,255,255,.1);
 
 z-index:999;
 
@@ -210,62 +218,38 @@ list-style:none;
 
 
 
-nav ul li{
+nav ul li a{
 
-cursor:pointer;
+color:white;
 
-font-weight:500;
+text-decoration:none;
+
+font-weight:600;
 
 transition:.3s;
 
 }
 
-nav ul li a {
-    color:white;
-    text-decoration:none;
-    font-weight:500;
-}
 
 
-nav ul li a:visited {
-    color:white;
-}
+nav ul li a:hover{
 
-
-nav ul li a:hover {
-    color:#ff4d4d;
-}
-
-
-
-nav ul li:hover{
-
-color:#ff4d4d;
+color:#ff4444;
 
 }
 
 
 
-/* PANIER ICON */
+/* PANIER */
 
 
 .cart-icon{
-
-position:relative;
 
 font-size:30px;
 
 cursor:pointer;
 
-transition:.3s;
-
-}
-
-
-
-.cart-icon:hover{
-
-transform:scale(1.15);
+position:relative;
 
 }
 
@@ -279,11 +263,11 @@ top:-8px;
 
 right:-12px;
 
-background:var(--red);
-
 width:22px;
 
 height:22px;
+
+background:var(--red);
 
 border-radius:50%;
 
@@ -301,14 +285,14 @@ font-weight:800;
 
 
 
-/* ==========================
-        HERO
-========================== */
+/* =====================================
+                HERO
+===================================== */
 
 
 .hero{
 
-min-height:100vh;
+height:100vh;
 
 display:flex;
 
@@ -330,11 +314,21 @@ padding-top:100px;
 
 width:260px;
 
-margin-bottom:40px;
+animation:float 4s infinite;
 
-animation:float 4s infinite ease-in-out;
+filter:drop-shadow(0 0 35px white);
 
-filter:drop-shadow(0 0 30px rgba(255,255,255,.3));
+}
+
+
+
+@keyframes float{
+
+50%{
+
+transform:translateY(-20px);
+
+}
 
 }
 
@@ -346,7 +340,7 @@ font-size:70px;
 
 font-weight:800;
 
-margin-bottom:25px;
+margin:25px;
 
 }
 
@@ -354,26 +348,33 @@ margin-bottom:25px;
 
 .hero p{
 
+max-width:800px;
+
 font-size:20px;
 
 opacity:.8;
 
-max-width:800px;
-
 line-height:1.7;
 
-margin-bottom:50px;
+margin-bottom:40px;
 
 }
 
 
 
-/* BUTTON */
+/* BUTTON PRINCIPAL */
 
 
 .btn{
 
-background:linear-gradient(45deg,var(--red),#ff2a2a);
+background:
+
+linear-gradient(
+45deg,
+var(--red),
+var(--red-light)
+);
+
 
 padding:18px 45px;
 
@@ -383,13 +384,15 @@ color:white;
 
 text-decoration:none;
 
-font-weight:700;
+font-weight:800;
 
 font-size:18px;
 
-box-shadow:0 15px 35px #d6000055;
+box-shadow:
 
-transition:.35s;
+0 15px 35px #d6000055;
+
+transition:.3s;
 
 }
 
@@ -397,15 +400,13 @@ transition:.35s;
 
 .btn:hover{
 
-transform:translateY(-6px);
+transform:translateY(-5px);
 
 }
 
-
-
-/* ==========================
-        PRODUCTS
-========================== */
+/* =====================================
+              PRODUITS
+===================================== */
 
 
 .products{
@@ -418,13 +419,13 @@ padding:120px 8%;
 
 .title{
 
+text-align:center;
+
 font-size:42px;
 
 font-weight:800;
 
-text-align:center;
-
-margin-bottom:50px;
+margin-bottom:60px;
 
 }
 
@@ -447,7 +448,7 @@ gap:35px;
 
 background:var(--glass);
 
-border:1px solid var(--glassBorder);
+border:1px solid var(--border);
 
 backdrop-filter:blur(18px);
 
@@ -455,7 +456,7 @@ border-radius:25px;
 
 padding:30px;
 
-transition:.4s;
+transition:.35s;
 
 overflow:hidden;
 
@@ -465,7 +466,11 @@ overflow:hidden;
 
 .card:hover{
 
-transform:translateY(-12px);
+transform:translateY(-10px);
+
+box-shadow:
+
+0 20px 50px rgba(0,0,0,.3);
 
 }
 
@@ -498,6 +503,8 @@ margin-bottom:10px;
 .card p{
 
 opacity:.75;
+
+line-height:1.5;
 
 margin-bottom:20px;
 
@@ -534,15 +541,15 @@ margin-bottom:15px;
 
 .quantity input{
 
-width:65px;
+width:70px;
 
-height:38px;
+height:40px;
 
-background:rgba(255,255,255,.08);
+border-radius:12px;
 
 border:1px solid rgba(255,255,255,.2);
 
-border-radius:12px;
+background:rgba(255,255,255,.08);
 
 color:white;
 
@@ -562,14 +569,11 @@ outline:none;
 
 border-color:var(--red);
 
-box-shadow:0 0 15px #d6000060;
-
 }
 
 
 
-
-/* BUTTON BUY */
+/* BOUTON ACHAT */
 
 
 .buy{
@@ -578,17 +582,17 @@ width:100%;
 
 padding:16px;
 
-border:none;
-
-border-radius:15px;
-
 background:var(--red);
 
 color:white;
 
-font-weight:700;
+border:none;
+
+border-radius:15px;
 
 font-size:17px;
+
+font-weight:700;
 
 cursor:pointer;
 
@@ -600,39 +604,46 @@ transition:.3s;
 
 .buy:hover{
 
-background:var(--redHover);
+background:var(--red-light);
+
+transform:scale(1.03);
 
 }
 
 
 
-
-/* ==========================
-        PANIER
-========================== */
+/* =====================================
+                PANIER
+===================================== */
 
 
 .cart{
 
 position:fixed;
 
-top:95px;
+top:100px;
 
 right:30px;
 
-width:340px;
+width:350px;
 
-background:rgba(7,27,90,.95);
+padding:25px;
 
-backdrop-filter:blur(18px);
+background:
 
-padding:22px;
+rgba(7,27,90,.95);
 
-border-radius:20px;
 
-border:1px solid rgba(255,255,255,.1);
+backdrop-filter:blur(20px);
 
-box-shadow:0 15px 40px rgba(0,0,0,.4);
+border-radius:25px;
+
+border:1px solid var(--border);
+
+box-shadow:
+
+0 20px 50px rgba(0,0,0,.4);
+
 
 opacity:0;
 
@@ -641,6 +652,8 @@ transform:translateY(-20px);
 pointer-events:none;
 
 transition:.35s;
+
+z-index:1500;
 
 }
 
@@ -672,7 +685,7 @@ display:flex;
 
 justify-content:space-between;
 
-margin-bottom:10px;
+margin-bottom:12px;
 
 font-size:14px;
 
@@ -685,6 +698,8 @@ font-size:14px;
 background:none;
 
 border:none;
+
+color:red;
 
 cursor:pointer;
 
@@ -706,9 +721,9 @@ font-weight:800;
 
 .checkout{
 
-margin-top:20px;
-
 width:100%;
+
+margin-top:20px;
 
 padding:16px;
 
@@ -720,7 +735,7 @@ border-radius:15px;
 
 color:white;
 
-font-weight:700;
+font-weight:800;
 
 cursor:pointer;
 
@@ -728,9 +743,9 @@ cursor:pointer;
 
 
 
-/* ==========================
-        POPUP
-========================== */
+/* =====================================
+             POPUP COMMANDE
+===================================== */
 
 
 .popup{
@@ -741,7 +756,12 @@ top:50%;
 
 left:50%;
 
-transform:translate(-50%,-50%) scale(.8);
+
+transform:
+
+translate(-50%,-50%)
+scale(.8);
+
 
 width:500px;
 
@@ -749,15 +769,18 @@ max-width:90%;
 
 padding:40px;
 
+
 background:#081B58;
 
-border-radius:25px;
 
-border:1px solid rgba(255,255,255,.15);
+border-radius:30px;
+
+border:1px solid var(--border);
+
 
 display:none;
 
-z-index:2000;
+z-index:2500;
 
 }
 
@@ -767,7 +790,10 @@ z-index:2000;
 
 display:block;
 
-transform:translate(-50%,-50%) scale(1);
+transform:
+
+translate(-50%,-50%)
+scale(1);
 
 }
 
@@ -780,15 +806,20 @@ width:100%;
 
 margin-top:15px;
 
-padding:16px;
+padding:15px;
+
 
 background:#0d2a85;
+
 
 border:none;
 
 border-radius:12px;
 
+
 color:white;
+
+outline:none;
 
 }
 
@@ -806,117 +837,32 @@ resize:none;
 
 .popup button{
 
-margin-top:25px;
-
 width:100%;
+
+margin-top:25px;
 
 padding:16px;
 
+
 background:var(--red);
+
 
 border:none;
 
 border-radius:15px;
 
+
 color:white;
 
-font-weight:700;
+font-weight:800;
+
+cursor:pointer;
 
 }
 
 
 
-/* FOOTER */
-
-
-footer{
-
-padding:50px;
-
-text-align:center;
-
-opacity:.6;
-
-}
-
-
-
-/* ANIMATION */
-
-
-@keyframes float{
-
-50%{
-
-transform:translateY(-20px);
-
-}
-
-}
-
-
-
-
-/* MOBILE */
-
-
-@media(max-width:900px){
-
-
-nav{
-
-padding:0 25px;
-
-}
-
-
-nav ul{
-
-display:none;
-
-}
-
-
-.hero h2{
-
-font-size:50px;
-
-}
-
-
-
-}
-
-
-
-@media(max-width:600px){
-
-
-.hero h2{
-
-font-size:38px;
-
-}
-
-
-.cart{
-
-right:4%;
-
-width:92%;
-
-}
-
-
-.upload-label{
-
-display:block;
-
-margin-top:20px;
-
-font-weight:700;
-
-}
+/* FILE UPLOAD */
 
 
 #paymentProof{
@@ -933,39 +879,63 @@ width:100%;
 
 color:white;
 
-} 
+}
+
+
+
+/* =====================================
+            SUCCES COMMANDE
+===================================== */
 
 
 .success-popup{
 
+
 position:fixed;
 
 top:50%;
+
 left:50%;
 
-transform:translate(-50%,-50%);
 
-background:#081B58;
+transform:
 
-padding:40px;
+translate(-50%,-50%);
 
-border-radius:25px;
 
 width:450px;
 
 max-width:90%;
 
+
+background:#081B58;
+
+
+padding:40px;
+
+
+border-radius:30px;
+
+
 text-align:center;
+
 
 display:none;
 
+
 z-index:3000;
 
-border:1px solid rgba(255,255,255,.2);
 
-box-shadow:0 20px 50px rgba(0,0,0,.5);
+border:1px solid var(--border);
+
+
+box-shadow:
+
+0 20px 60px rgba(0,0,0,.5);
+
 
 }
+
 
 
 .success-popup.active{
@@ -975,13 +945,15 @@ display:block;
 }
 
 
+
 .success-popup h2{
 
-font-size:28px;
+font-size:30px;
 
 margin-bottom:20px;
 
 }
+
 
 
 .success-popup p{
@@ -993,109 +965,132 @@ margin-bottom:30px;
 }
 
 
-.success-popup button{
 
-background:#d60000;
+#downloadReceipt{
+
+
+display:block;
+
+margin:20px auto;
+
 
 color:white;
 
-border:none;
 
-padding:15px 40px;
+background:var(--red);
 
-border-radius:15px;
 
-cursor:pointer;
+padding:14px 30px;
+
+
+border-radius:30px;
+
+
+text-decoration:none;
+
 
 font-weight:700;
 
+
 }
 
-#downloadReceipt {
-    display: block;
-    margin: 15px auto;
-    color: #777;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    transition: 0.3s;
+
+
+#downloadReceipt:hover{
+
+
+background:var(--red-light);
+
+
 }
 
-#downloadReceipt:hover {
-    color: #d60000;
-}
+/* =====================================
+              PROMOTIONS
+===================================== */
 
-/* ==========================
-        PROMOTIONS
-========================== */
 
 .promotions{
 
-    padding:120px 8%;
+padding:120px 8%;
 
 }
+
 
 
 .promo-box{
 
-    max-width:700px;
+max-width:750px;
 
-    margin:auto;
+margin:auto;
 
-    background:rgba(214,0,0,.15);
+padding:45px;
 
-    border:1px solid rgba(214,0,0,.4);
 
-    backdrop-filter:blur(15px);
+background:
 
-    border-radius:25px;
+rgba(214,0,0,.15);
 
-    padding:40px;
 
-    text-align:center;
+border:
+
+1px solid rgba(214,0,0,.4);
+
+
+border-radius:30px;
+
+
+backdrop-filter:blur(20px);
+
+
+text-align:center;
 
 }
+
 
 
 .promo-box h3{
 
-    font-size:32px;
+font-size:35px;
 
-    margin-bottom:20px;
+margin-bottom:20px;
 
 }
+
 
 
 .promo-box p{
 
-    opacity:.8;
+font-size:18px;
 
-    font-size:18px;
+opacity:.8;
 
-    margin-bottom:25px;
+line-height:1.6;
 
 }
+
 
 
 .promo-box span{
 
-    display:inline-block;
+display:inline-block;
 
-    background:#D60000;
+margin-top:25px;
 
-    padding:12px 30px;
+background:var(--red);
 
-    border-radius:30px;
+padding:12px 35px;
 
-    font-weight:700;
+border-radius:30px;
+
+font-weight:800;
 
 }
 
 
-/* ==========================
-        PAGE PROMOTIONS
-========================== */
+
+/* =====================================
+          PAGE PROMOTIONS
+===================================== */
 
 
 .promo-page{
@@ -1109,24 +1104,31 @@ text-align:center;
 }
 
 
+
 .promo-logo{
 
 width:180px;
 
-filter:drop-shadow(0 0 25px rgba(255,255,255,.3));
-
 margin-bottom:30px;
 
+filter:
+
+drop-shadow(
+0 0 30px rgba(255,255,255,.3)
+);
+
 }
+
 
 
 .promo-page h2{
 
-font-size:55px;
+font-size:60px;
 
 font-weight:800;
 
 }
+
 
 
 .subtitle{
@@ -1135,7 +1137,9 @@ font-size:20px;
 
 opacity:.8;
 
-margin:20px auto 60px;
+margin:
+
+20px auto 60px;
 
 }
 
@@ -1143,23 +1147,36 @@ margin:20px auto 60px;
 
 .promo-card{
 
+
 width:600px;
 
 max-width:90%;
 
+
 margin:auto;
 
-background:rgba(255,255,255,.08);
-
-border:1px solid rgba(255,255,255,.15);
-
-backdrop-filter:blur(20px);
-
-border-radius:30px;
 
 padding:50px;
 
+
+background:
+
+rgba(255,255,255,.08);
+
+
+border:
+
+1px solid rgba(255,255,255,.15);
+
+
+border-radius:30px;
+
+
+backdrop-filter:blur(20px);
+
+
 position:relative;
+
 
 }
 
@@ -1167,21 +1184,30 @@ position:relative;
 
 .badge{
 
+
 position:absolute;
 
-top:-18px;
+
+top:-20px;
+
 
 left:50%;
 
+
 transform:translateX(-50%);
 
-background:#D60000;
 
-padding:10px 30px;
+background:var(--red);
+
+
+padding:12px 35px;
+
 
 border-radius:30px;
 
+
 font-weight:800;
+
 
 }
 
@@ -1189,57 +1215,252 @@ font-weight:800;
 
 .promo-card h3{
 
-font-size:30px;
+font-size:32px;
 
 margin-bottom:20px;
 
 }
 
 
-.promo-card p{
 
-opacity:.8;
+.promo-card p{
 
 font-size:18px;
 
+opacity:.8;
+
+line-height:1.6;
+
 }
 
-/* SUCCESS POPUP */
 
-.success-popup{
 
-position:fixed;
+/* =====================================
+                FOOTER
+===================================== */
 
-top:50%;
-left:50%;
 
-transform:translate(-50%,-50%);
+footer{
 
-background:#081B58;
 
-padding:40px;
+padding:50px;
 
-border-radius:25px;
-
-width:450px;
-
-max-width:90%;
 
 text-align:center;
 
-display:none;
 
-z-index:3000;
+opacity:.7;
 
-border:1px solid rgba(255,255,255,.2);
-
-box-shadow:0 20px 50px rgba(0,0,0,.5);
 
 }
 
 
-.success-popup.active{
 
-display:block;
+/* =====================================
+              ANIMATIONS
+===================================== */
+
+
+@keyframes pulse{
+
+
+50%{
+
+box-shadow:
+
+0 0 40px var(--red);
+
+}
+
+
+}
+
+
+
+/* =====================================
+              MOBILE
+===================================== */
+
+
+@media(max-width:900px){
+
+
+nav{
+
+
+padding:0 20px;
+
+
+}
+
+
+
+.logo h1{
+
+
+font-size:22px;
+
+
+}
+
+
+
+nav ul{
+
+
+display:none;
+
+
+}
+
+
+
+.hero h2{
+
+
+font-size:45px;
+
+
+}
+
+
+
+.hero p{
+
+
+font-size:16px;
+
+
+padding:0 20px;
+
+
+}
+
+
+
+.products{
+
+
+padding:100px 5%;
+
+
+}
+
+
+
+.title{
+
+
+font-size:35px;
+
+
+}
+
+
+
+.cart{
+
+
+right:5%;
+
+
+width:90%;
+
+
+}
+
+
+
+.popup{
+
+
+padding:30px;
+
+
+}
+
+
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+
+.hero img{
+
+
+width:190px;
+
+
+}
+
+
+
+.hero h2{
+
+
+font-size:38px;
+
+
+}
+
+
+
+.btn{
+
+
+padding:15px 30px;
+
+
+font-size:16px;
+
+
+}
+
+
+
+.card{
+
+
+padding:25px;
+
+
+}
+
+
+
+.promo-page h2{
+
+
+font-size:40px;
+
+
+}
+
+
+
+.promo-card{
+
+
+padding:35px 20px;
+
+
+}
+
+
+
+.success-popup{
+
+
+padding:30px;
+
+
+}
+
+
 
 }
