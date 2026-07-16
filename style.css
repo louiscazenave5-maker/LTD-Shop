@@ -1012,14 +1012,23 @@ font-weight:700;
 
 .contact-btn {
 
-    background:none;
-    border:none;
-    color:white;
-    font-size:inherit;
-    font-family:inherit;
-    font-weight:700;
-    cursor:pointer;
-    padding:0;
+    background: transparent !important;
+    border: none !important;
+
+    color: white;
+
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    padding: 0;
+    margin: 0;
+
+    outline: none;
+
+    appearance: none;
 
 }
 
@@ -1029,5 +1038,4 @@ font-weight:700;
     color:#D60000;
 
 }
-
 }
