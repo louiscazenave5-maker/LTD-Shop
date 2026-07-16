@@ -1010,61 +1010,26 @@ font-weight:700;
     color: #d60000;
 }
 
-.contact-btn {
-
-    background: transparent !important;
-    border: none !important;
-
-    color: white;
-
-    font-size: inherit;
-    font-family: inherit;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    padding: 0;
-    margin: 0;
-
-    outline: none;
-
-    appearance: none;
-
+d60000;
 }
 
-
-.contact-btn:hover {
-
-    color:#D60000;
-
-}
-
-
-nav .contact-btn {
+nav ul li a.discord-contact {
     all: unset;
-    color: white;
-    font-weight: 700;
     cursor: pointer;
-    display: inline-block;
-}
-
-
-nav .contact-btn:hover {
-    color: #D60000;
-}
-
-
-nav ul li .contact-link {
-    color: white !important;
-    text-decoration: none !important;
-    background: none !important;
-    padding: 0 !important;
-    border: none !important;
+    color: white;
+    font-size: inherit;
     font-weight: 700;
+    text-decoration: none;
+    display: block;
 }
 
 
-nav ul li .contact-link:hover {
-    color: #D60000 !important;
+nav ul li a.discord-contact:visited {
+    color: white;
+}
+
+
+nav ul li a.discord-contact:hover {
+    color: #D60000;
 }
 }
