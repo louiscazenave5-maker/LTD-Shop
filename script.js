@@ -8,6 +8,27 @@ const API_URL = "/api/order";
 
 
 // ==========================
+// CONFIGURATION
+// ==========================
+
+
+// Numéro de compte à afficher au client
+const PAYMENT_ACCOUNT = "44";
+
+
+// Codes promo modifiables
+// Exemple : CODE: réduction en %
+const PROMO_CODES = {
+
+    "LTD20": 20,
+    "LTD10": 10
+
+};
+
+
+
+
+// ==========================
 // PANIER
 // ==========================
 
@@ -16,7 +37,10 @@ let cart = JSON.parse(localStorage.getItem("ltdCart")) || [];
 
 
 
+
+
 // ELEMENTS
+
 
 const buttons = document.querySelectorAll(".buy");
 
@@ -36,17 +60,43 @@ const popup = document.querySelector(".popup");
 
 const sendOrderBtn = document.getElementById("sendOrder");
 
-
-// Confirmation
-
 const successPopup = document.getElementById("successPopup");
 
 const closeSuccess = document.getElementById("closeSuccess");
 
-
-// Date livraison
-
 const orderDate = document.getElementById("orderDate");
+
+
+
+
+
+// ==========================
+// AFFICHER COMPTE
+// ==========================
+
+
+const accountBox = document.createElement("p");
+
+accountBox.style.marginTop = "20px";
+
+accountBox.style.fontWeight = "700";
+
+accountBox.innerHTML =
+`
+Compte de paiement : ${PAYMENT_ACCOUNT}
+`;
+
+
+
+if(popup){
+
+    popup.insertBefore(
+        accountBox,
+        sendOrderBtn
+    );
+
+}
+
 
 
 
@@ -65,6 +115,7 @@ cartIcon.addEventListener("click",()=>{
 });
 
 }
+
 
 
 
@@ -97,24 +148,21 @@ card.querySelector(".price")
 
 
 
-const quantity = Number(
-
-card.querySelector("input").value
-
-) || 1;
+const quantity =
+Number(card.querySelector("input").value) || 1;
 
 
 
 
 cart.push({
 
-name,
+    name,
 
-price,
+    price,
 
-quantity,
+    quantity,
 
-total:price * quantity
+    total:price * quantity
 
 });
 
@@ -127,8 +175,8 @@ updateCart();
 
 
 
-button.textContent="Ajouté ✓";
 
+button.textContent="Ajouté ✓";
 
 
 setTimeout(()=>{
@@ -159,6 +207,7 @@ function updateCart(){
 if(!cartItems) return;
 
 
+
 cartItems.innerHTML="";
 
 
@@ -173,8 +222,6 @@ if(cart.length === 0){
 
 cartItems.innerHTML =
 "<p>Votre panier est vide.</p>";
-
-
 
 }
 
@@ -196,7 +243,7 @@ div.className="cart-item";
 
 
 
-div.innerHTML=`
+div.innerHTML = `
 
 <span>
 ${item.name} x${item.quantity}
@@ -250,7 +297,6 @@ total.toLocaleString()+" $";
 
 
 
-
 // ==========================
 // SUPPRESSION
 // ==========================
@@ -268,7 +314,6 @@ updateCart();
 
 
 }
-
 
 
 
@@ -293,6 +338,7 @@ JSON.stringify(cart)
 
 
 
+
 // ==========================
 // OUVRIR COMMANDE
 // ==========================
@@ -313,17 +359,14 @@ return;
 }
 
 
+
 popup.classList.add("active");
+
 
 
 });
 
-
 }
-
-
-
-
 
 // ==========================
 // ENVOI COMMANDE
@@ -333,7 +376,7 @@ popup.classList.add("active");
 if(sendOrderBtn){
 
 
-sendOrderBtn.addEventListener("click",async()=>{
+sendOrderBtn.addEventListener("click", async()=>{
 
 
 
@@ -352,16 +395,43 @@ document.getElementById("clientLocation").value;
 
 
 
-const file =
-document.getElementById("paymentProof").files[0];
-
-
-
 const deliveryDate =
 orderDate ? orderDate.value : "";
 
 
 
+const file =
+document.getElementById("paymentProof").files[0];
+
+
+
+
+// CODE PROMO
+
+const promoInput =
+document.getElementById("promoCode");
+
+
+const promoCode =
+promoInput ? promoInput.value.toUpperCase() : "";
+
+
+
+let discount = 0;
+
+
+
+if(PROMO_CODES[promoCode]){
+
+    discount = PROMO_CODES[promoCode];
+
+}
+
+
+
+
+
+// VERIFICATIONS
 
 
 if(!name || !phone || !location || !deliveryDate){
@@ -376,8 +446,6 @@ return;
 
 
 }
-
-
 
 
 
@@ -398,8 +466,10 @@ return;
 
 
 
+// CALCUL TOTAL
 
-let total = 0;
+
+let totalBefore = 0;
 
 let products = "";
 
@@ -408,7 +478,7 @@ let products = "";
 cart.forEach(item=>{
 
 
-total += item.total;
+totalBefore += item.total;
 
 
 
@@ -423,10 +493,34 @@ products +=
 
 
 
+let reduction = 0;
+
+
+if(discount > 0){
+
+    reduction =
+    Math.round(
+        totalBefore * discount / 100
+    );
+
+}
+
+
+
+
+const finalTotal =
+totalBefore - reduction;
+
+
+
+
+
+
+
+// FORM DATA
 
 
 const formData = new FormData();
-
 
 
 
@@ -466,8 +560,36 @@ products
 
 
 formData.append(
+"totalBefore",
+totalBefore + " $"
+);
+
+
+
+formData.append(
+"discount",
+discount + "%"
+);
+
+
+
+formData.append(
+"reduction",
+reduction + " $"
+);
+
+
+
+formData.append(
+"promoCode",
+promoCode || "Aucun"
+);
+
+
+
+formData.append(
 "total",
-total.toLocaleString()+" $"
+finalTotal + " $"
 );
 
 
@@ -482,11 +604,12 @@ file
 
 
 
-
 try{
 
 
-sendOrderBtn.textContent="Envoi...";
+sendOrderBtn.textContent =
+"Envoi...";
+
 
 sendOrderBtn.disabled=true;
 
@@ -506,6 +629,7 @@ body:formData
 
 
 
+
 if(!response.ok){
 
 throw new Error(
@@ -513,6 +637,7 @@ throw new Error(
 );
 
 }
+
 
 
 
@@ -540,17 +665,22 @@ alert(
 
 
 
+// RESET PANIER
+
 
 cart=[];
 
+
 saveCart();
+
 
 updateCart();
 
 
 
-popup.classList.remove("active");
 
+
+popup.classList.remove("active");
 
 
 
@@ -571,6 +701,15 @@ if(orderDate){
 orderDate.value="";
 
 }
+
+
+
+if(promoInput){
+
+promoInput.value="";
+
+}
+
 
 
 
@@ -596,6 +735,7 @@ alert(
 
 
 
+
 finally{
 
 
@@ -606,8 +746,8 @@ sendOrderBtn.textContent =
 sendOrderBtn.disabled=false;
 
 
-
 }
+
 
 
 
@@ -615,7 +755,6 @@ sendOrderBtn.disabled=false;
 
 
 }
-
 
 
 
@@ -644,8 +783,9 @@ successPopup.classList.remove("active");
 
 
 
+
 // ==========================
-// FERMER POPUP COMMANDE
+// FERMETURE POPUP COMMANDE
 // ==========================
 
 
@@ -664,6 +804,8 @@ popup.classList.contains("active")
 
 &&
 
+checkoutBtn &&
+
 !checkoutBtn.contains(e.target)
 
 ){
@@ -675,7 +817,9 @@ popup.classList.remove("active");
 }
 
 
+
 });
+
 
 
 
