@@ -1200,7 +1200,7 @@ doc.setTextColor(
 doc.text(
 "CLIENT",
 105,
-178,
+165,
 {
 align:"center"
 }
@@ -1225,28 +1225,28 @@ doc.setTextColor(
 doc.text(
 "Nom : " + lastReceipt.name,
 25,
-190
+178
 );
 
 
 doc.text(
 "Téléphone : " + lastReceipt.phone,
 25,
-200
+188
 );
 
 
 doc.text(
 "Lieu : " + lastReceipt.location,
 25,
-210
+198
 );
 
 
 doc.text(
 "Livraison : " + lastReceipt.deliveryDate,
 25,
-220
+208
 );
 
 
