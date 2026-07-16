@@ -119,10 +119,8 @@ export default async function handler(req, res) {
 
 
         const promoCode =
-            fields.promoCode?.[0] || "Aucun";
-
-       import formidable from "formidable";
-import fs from "fs";
+            fields.promoCode?.[0] || ";
+    
 
 export const config = {
     api: {
