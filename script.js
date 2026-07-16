@@ -962,16 +962,17 @@ logo.onload = () => {
         60
     );
 
-    createPDF();
+    createPDF(doc);
 
 };
 
 
 logo.onerror = () => {
 
-    createPDF();
+    createPDF(doc);
 
 };
+
 
 
 
@@ -1064,9 +1065,13 @@ function createPDF(doc){
         {align:"center"}
     );
 
-    doc.save(lastReceipt.number + ".pdf");
+doc.save(lastReceipt.number + ".pdf");
+
 }
 
+});
+
+}
 
 console.log("LTD SHOP READY");
 
