@@ -122,6 +122,7 @@ export default async function handler(req, res) {
             fields.promoCode?.[0] || "Aucun";
 
         const orderNumber =
+fields.orderNumber?.[0] || "LTD-000000";
 "LTD-" + Date.now().toString().slice(-6);
 
 
