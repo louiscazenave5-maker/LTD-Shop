@@ -1038,4 +1038,18 @@ font-weight:700;
     color:#D60000;
 
 }
+
+
+nav .contact-btn {
+    all: unset;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+nav .contact-btn:hover {
+    color: #D60000;
+}
 }
