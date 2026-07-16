@@ -7,7 +7,9 @@ export const config = {
     },
 };
 
+
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
+
 
 
 export default async function handler(req, res) {
@@ -22,6 +24,7 @@ export default async function handler(req, res) {
     }
 
 
+
     if (!WEBHOOK_URL) {
 
         return res.status(500).json({
@@ -31,11 +34,12 @@ export default async function handler(req, res) {
     }
 
 
+
     const form = formidable({
 
-        multiples: false,
+        multiples:false,
 
-        maxFileSize: 8 * 1024 * 1024
+        maxFileSize:8 * 1024 * 1024
 
     });
 
@@ -52,12 +56,15 @@ export default async function handler(req, res) {
             fields.name?.[0] || "Inconnu";
 
 
+
         const phone =
             fields.phone?.[0] || "Non renseigné";
 
 
+
         const location =
             fields.location?.[0] || "Non renseigné";
+
 
 
         let deliveryDate =
@@ -65,26 +72,35 @@ export default async function handler(req, res) {
 
 
 
-        if (deliveryDate !== "Non renseignée") {
+        if(deliveryDate !== "Non renseignée"){
+
 
             const date = new Date(deliveryDate);
 
 
-            deliveryDate = date.toLocaleString("fr-FR", {
+            deliveryDate = date.toLocaleString("fr-FR",{
 
-                day: "2-digit",
+                day:"2-digit",
 
-                month: "2-digit",
+                month:"2-digit",
 
-                year: "numeric",
+                year:"numeric",
 
-                hour: "2-digit",
+                hour:"2-digit",
 
-                minute: "2-digit"
+                minute:"2-digit"
 
             });
 
+
         }
+
+
+
+
+        const promoCode =
+            fields.promoCode?.[0] || "Aucun";
+
 
 
 
@@ -92,8 +108,10 @@ export default async function handler(req, res) {
             fields.products?.[0] || "Aucun produit";
 
 
+
         const total =
             fields.total?.[0] || "0 $";
+
 
 
 
@@ -103,89 +121,85 @@ export default async function handler(req, res) {
 
 
 
+
+
+
         const embed = {
 
 
-            title: "Nouvelle Commande",
+            title:"Nouvelle Commande",
 
 
-            color: 5763719,
+            color:5763719,
 
 
-            fields: [
+
+            fields:[
+
 
 
                 {
-
-                    name: "Client",
-
-                    value: name,
-
-                    inline: true
-
+                    name:"Client",
+                    value:name,
+                    inline:true
                 },
 
 
                 {
-
-                    name: "Téléphone",
-
-                    value: phone,
-
-                    inline: true
-
+                    name:"Téléphone",
+                    value:phone,
+                    inline:true
                 },
 
 
                 {
-
-                    name: "Lieu de livraison",
-
-                    value: location
-
+                    name:"Lieu de livraison",
+                    value:location
                 },
 
 
                 {
-
-                    name: "Date de livraison souhaitée",
-
-                    value: deliveryDate
-
+                    name:"Date de livraison souhaitée",
+                    value:deliveryDate
                 },
 
 
                 {
-
-                    name: "Produits",
-
-                    value: products.substring(0, 1000)
-
+                    name:"Code promotionnel",
+                    value:promoCode
                 },
 
 
                 {
+                    name:"Produits",
+                    value:products.substring(0,1000)
+                },
 
-                    name: "Total",
 
-                    value: total
-
+                {
+                    name:"Total",
+                    value:total
                 }
 
 
             ],
 
 
-            footer: {
 
-                text: "LTD LS • Limited Gasoline"
+            footer:{
+
+                text:"LTD LS • Limited Gasoline"
 
             },
 
 
-            timestamp: new Date()
+
+            timestamp:new Date()
+
 
         };
+
+
 
 
 
@@ -201,7 +215,7 @@ export default async function handler(req, res) {
 
             JSON.stringify({
 
-                embeds: [embed]
+                embeds:[embed]
 
             })
 
@@ -210,7 +224,10 @@ export default async function handler(req, res) {
 
 
 
-        if (proof) {
+
+
+
+        if(proof){
 
 
             const buffer = fs.readFileSync(
@@ -218,6 +235,7 @@ export default async function handler(req, res) {
                 proof.filepath
 
             );
+
 
 
             discordForm.append(
@@ -236,15 +254,18 @@ export default async function handler(req, res) {
 
 
 
+
+
+
         const discordResponse = await fetch(
 
             WEBHOOK_URL,
 
             {
 
-                method: "POST",
+                method:"POST",
 
-                body: discordForm
+                body:discordForm
 
             }
 
@@ -253,10 +274,15 @@ export default async function handler(req, res) {
 
 
 
-        if (!discordResponse.ok) {
 
 
-            const discordError = await discordResponse.text();
+
+        if(!discordResponse.ok){
+
+
+            const discordError =
+            await discordResponse.text();
+
 
 
             console.error(
@@ -266,6 +292,7 @@ export default async function handler(req, res) {
                 discordError
 
             );
+
 
 
             throw new Error(
@@ -280,17 +307,23 @@ export default async function handler(req, res) {
 
 
 
+
+
+
         return res.status(200).json({
 
-            success: true,
+            success:true,
 
-            message: "Commande envoyée"
+            message:"Commande envoyée"
 
         });
 
 
 
-    } catch (error) {
+
+
+
+    } catch(error){
 
 
         console.error(
@@ -302,9 +335,10 @@ export default async function handler(req, res) {
         );
 
 
+
         return res.status(500).json({
 
-            error: "Erreur serveur"
+            error:"Erreur serveur"
 
         });
 
