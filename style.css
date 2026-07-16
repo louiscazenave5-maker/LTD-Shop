@@ -997,16 +997,17 @@ font-weight:700;
 
 #downloadReceipt {
     display: block;
-    margin: 20px auto 15px;
-    color: #888;
-    font-size: 14px;
-    cursor: pointer;
+    margin: 15px auto;
+    color: #777;
     text-decoration: underline;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
     transition: 0.3s;
 }
 
 #downloadReceipt:hover {
-    color: #071B5A;
+    color: #d60000;
 }
 
 }
