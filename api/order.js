@@ -255,7 +255,7 @@ export default async function handler(req, res) {
 
                 new Blob([buffer]),
 
-                proof.originalFilename || "preuve.png"
+                proof.originalFilename || "preuve-paiement"
 
             );
 
