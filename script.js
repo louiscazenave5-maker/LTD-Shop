@@ -521,8 +521,7 @@ const finalTotal =
 totalBefore - reduction;
 
 
-const orderNumber = generateOrderNumber();
-
+let orderNumber = "";
 
 lastReceipt = {
 
