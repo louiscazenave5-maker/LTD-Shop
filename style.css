@@ -1052,4 +1052,19 @@ nav .contact-btn {
 nav .contact-btn:hover {
     color: #D60000;
 }
+
+
+nav ul li .contact-link {
+    color: white !important;
+    text-decoration: none !important;
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    font-weight: 700;
+}
+
+
+nav ul li .contact-link:hover {
+    color: #D60000 !important;
+}
 }
