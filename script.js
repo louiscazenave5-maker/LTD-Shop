@@ -647,7 +647,45 @@ throw new Error(
 
 if(successPopup){
 
-    successPopup.classList.add("active");
+successPopup.classList.add("active");
+
+
+// Ferme le panier
+if(cartBox){
+    cartBox.classList.remove("active");
+}
+
+
+// Confettis
+if(typeof confetti === "function"){
+
+    confetti({
+
+        particleCount: 180,
+
+        spread: 100,
+
+        origin:{
+            y:0.6
+        }
+
+    });
+
+}
+
+
+// Son confirmation
+const sound = new Audio("/success.mp3");
+
+sound.volume = 0.5;
+
+sound.play().catch(error=>{
+
+    console.log("Son bloqué :", error);
+
+});
+
+}
 
 
     // Fermer le panier
