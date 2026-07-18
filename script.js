@@ -1149,7 +1149,7 @@ align:"center"
 
 doc.setFont(
 "helvetica",
-"normal"
+"bold"
 );
 
 
@@ -1214,7 +1214,7 @@ align:"center"
 
 doc.setFont(
 "helvetica",
-"normal"
+"bold"
 );
 
 
