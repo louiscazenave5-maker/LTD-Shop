@@ -521,6 +521,11 @@ box-shadow:
     font-size:30px;
     font-weight:800;
 
+    height:50px;
+
+    display:flex;
+    align-items:center;
+
     margin-top:auto;
     margin-bottom:20px;
 
