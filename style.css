@@ -456,17 +456,30 @@ gap:35px;
 
 
 .card{
+
     background:var(--glass);
+
     border:1px solid var(--border);
+
     backdrop-filter:blur(18px);
+
     border-radius:25px;
+
     padding:30px;
 
+
     display:flex;
+
     flex-direction:column;
 
+
+    height:620px;
+
+
     transition:.35s;
+
     overflow:hidden;
+
 }
 
 
@@ -484,44 +497,64 @@ box-shadow:
 
 
 .card img{
+
     width:100%;
+
     height:180px;
+
     object-fit:contain;
+
     margin-bottom:20px;
+
     flex-shrink:0;
+
 }
 
+
+
 .card h3{
+
     font-size:25px;
-    min-height:72px;      /* même hauteur de titre */
+
+    height:72px;
+
     display:flex;
+
     align-items:center;
+
     margin-bottom:10px;
+
 }
+
+
 
 .card p{
 
     opacity:.75;
+
     line-height:1.5;
 
-    margin-bottom:20px;
+    height:95px;
+
+    overflow:hidden;
+
+    margin-bottom:0;
 
 }
- 
+
+
 
 .price{
 
     font-size:30px;
+
     font-weight:800;
 
-    margin-top:40px;
+    margin-top:auto;
+
     margin-bottom:20px;
 
 }
-
-
-/* QUANTITE */
-
 
 .quantity{
 
