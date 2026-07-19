@@ -498,10 +498,21 @@ box-shadow:
 }
 
 .price{
+
+    height:50px;
+
+    display:flex;
+
+    align-items:center;
+
     font-size:30px;
+
     font-weight:800;
-    margin-top:auto;      /* pousse le prix vers le bas */
-    margin-bottom:20px;
+
+    margin-top:auto;
+
+    margin-bottom:10px;
+
 }
 
 
@@ -514,7 +525,11 @@ display:flex;
 
 justify-content:flex-end;
 
-margin-bottom:15px;
+height:55px;
+
+align-items:center;
+
+margin-bottom:10px;
 
 }
 
@@ -561,7 +576,9 @@ border-color:var(--red);
 
 width:100%;
 
-padding:16px;
+height:55px;
+
+padding:0;
 
 background:var(--red);
 
