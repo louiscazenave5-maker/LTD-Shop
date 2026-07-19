@@ -453,8 +453,9 @@ gap:35px;
 
     display:flex;
     flex-direction:column;
+    justify-content:flex-start;
 
-    height:620px; /* même hauteur pour toutes */
+    height:620px;
 
     transition:.35s;
     overflow:hidden;
@@ -495,9 +496,9 @@ box-shadow:
     opacity:.75;
     line-height:1.5;
 
-    min-height:95px;
+    height:95px;
 
-    margin-bottom:0;
+    margin-bottom:20px;
 
 }
 
@@ -512,8 +513,7 @@ box-shadow:
     display:flex;
     align-items:center;
 
-    margin-top:0;
-    margin-bottom:15px;
+    margin-bottom:20px;
 
 }
 
