@@ -465,10 +465,7 @@ gap:35px;
     display:flex;
     flex-direction:column;
 
-    min-height:620px;
-
     transition:.35s;
-    overflow:hidden;
     overflow:hidden;
 }
 
@@ -507,10 +504,6 @@ box-shadow:
     opacity:.75;
     line-height:1.5;
 
-    height:95px;
-
-    overflow:hidden;
-
     margin-bottom:20px;
 
 }
@@ -521,12 +514,7 @@ box-shadow:
     font-size:30px;
     font-weight:800;
 
-    height:50px;
-
-    display:flex;
-    align-items:center;
-
-    margin-top:auto;
+    margin-top:20px;
     margin-bottom:20px;
 
 }
