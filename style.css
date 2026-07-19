@@ -524,9 +524,8 @@ box-shadow:
     display:flex;
     align-items:center;
 
-    transform:translateY(60px);
-
-    margin-bottom:75px;
+    margin-top:0;
+    margin-bottom:15px;
 
 }
 
