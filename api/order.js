@@ -8,7 +8,7 @@ export const config = {
 };
 
 
-const WEBHOOK_URL = process.env.DISCORD_WEBHOOKK;
+const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
 
 
 
