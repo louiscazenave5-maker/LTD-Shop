@@ -18,7 +18,7 @@ function generateOrderNumber(){
 
 
 // Numéro de compte à afficher au client
-const PAYMENT_ACCOUNT = "44";
+const PAYMENT_ACCOUNT = "55";
 
 
 // Codes promo modifiables
