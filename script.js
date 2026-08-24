@@ -25,7 +25,8 @@ const PAYMENT_ACCOUNT = "55";
 // Exemple : CODE: réduction en %
 const PROMO_CODES = {
 
-    "TAG1": 20,
+    "LTD20": 20,
+    "OFF20": 20,
     "LTD10": 10
 
 };
